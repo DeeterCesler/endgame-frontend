@@ -65,7 +65,7 @@ class HomePage extends Component {
                         this.state.response != null ?
                         <div>
                             <p>Endpoint successfully submitted.</p>
-                    <p>Your new endpoint can be hit at <code>https://endpoint-backend.herokuapp.com/{this.props.id}/{this.state.endpointName}/</code></p>
+                    <p>Your new endpoint can be hit at <br/><code>https://endpoint-backend.herokuapp.com/{this.props.id}/{this.state.endpointName}/</code></p>
                         </div>
                         : <div/>
                     }
@@ -74,7 +74,7 @@ class HomePage extends Component {
                     <br/>
                      <h3>Your unique ID is <strong>{this.props.id}</strong></h3> 
                     <p>To use this, copy down your unique ID number. <br/> When you make an endpoint above, you can access your endpoint by using your id in the URL.</p>
-                    <p>E.g., when you hit <code>http://endgame.io/YourIdNumber/EndpointName</code> then the JSON response will be the value you put in above.</p>
+                    <p>E.g., when you hit <br/><code>http://endgame.io/YourIdNumber/EndpointName</code><br/> then the JSON response will be the value you put in above.</p>
                 </div>
                 : 
                 <div>
