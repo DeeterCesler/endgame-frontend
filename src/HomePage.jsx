@@ -25,7 +25,7 @@ class HomePage extends Component {
         console.log("FUCK THIS SHIT")
         try{
             console.log("SUBMITTING ENDPOINT")
-            const submittedEndpoint = await fetch(backendURL + "/new", {
+            const submittedEndpoint = await fetch(backendURL + "new", {
                 method: "POST",
                 body: JSON.stringify(this.state),
                 headers: {

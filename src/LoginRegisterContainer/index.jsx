@@ -12,7 +12,7 @@ class LoginRegisterContainer extends Component {
             <div>
                 {console.log("LOGGED: " + this.props.test)}
                 {/* {this.props.loggedIn ? <Redirect to="/"/>: <div/> } */}
-                <div className="background">
+                <div>
                     {this.props.loggedIn ? <Redirect to="/"/>: <div/> }
                     <div className="spacer"/>
                     <Login submitRegistration={this.props.submitRegistration} handleInputs={this.props.handleInputs} submitLogin={this.props.submitLogin} loggedIn={this.props.loggedIn}/>

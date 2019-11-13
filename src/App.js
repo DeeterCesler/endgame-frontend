@@ -101,9 +101,8 @@ class App extends Component {
         method: 'POST',
         body: JSON.stringify(this.state),
         headers: {
-          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Origin': targetUrl,
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Headers': "POST",
           'credentials': 'same-origin',
         } 
       });
@@ -131,8 +130,8 @@ class App extends Component {
     let parsedLogged;
     try{
       console.log("submitting login");
-      const targetUrl = backendURL;
-      const loggedUser = await fetch(targetUrl + 'auth/login', {
+      const targetUrl = backendURL  + 'auth/login';
+      const loggedUser = await fetch(targetUrl, {
         method: 'POST',
         body: JSON.stringify(this.state),
         headers: {
