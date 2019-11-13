@@ -61,7 +61,14 @@ class HomePage extends Component {
                         <button className="input" type="submit">Submit</button>
                     </form>
                     <br/>
-                    {this.state.response != null ?<p>Endpoint successfully submitted.</p>: <div/>}
+                    {
+                        this.state.response != null ?
+                        <div>
+                            <p>Endpoint successfully submitted.</p>
+                    <p>Your new endpoint can be hit at https://endpoint-frontend.herokuapp.com/{this.props.id}/{this.props.endpointName}</p>
+                        </div>
+                        : <div/>
+                    }
                     <br/>
                     <br/>
                     <br/>
