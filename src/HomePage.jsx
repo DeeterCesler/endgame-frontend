@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { Redirect } from "react-router-dom";
 
-const backendURL = "http://localhost:3000"
+const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
 
 class HomePage extends Component {
     constructor(props){

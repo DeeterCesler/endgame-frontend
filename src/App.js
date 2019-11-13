@@ -10,7 +10,7 @@ import LoginRegisterContainer from './LoginRegisterContainer';
 import LogoutPage from './LogoutPage';
 import HelpPage from './HelpPage';
 
-const backendURL = "http://localhost:3000/" || "https://followup-v1.herokuapp.com/";
+const backendURL = REACT_APP_BACKEND_SERVER_ADDRESS
 
 class App extends Component {
   constructor(){
