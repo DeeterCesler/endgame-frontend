@@ -199,3 +199,7 @@ body {
 .input{
   width: 80%;
 }
+
+.json{
+  min-height: 250px;
+}

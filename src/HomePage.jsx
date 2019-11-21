@@ -4,12 +4,21 @@ import FoundEndpoint from "./FoundEndpoint";
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
 
+const defaultText = `{
+    "yourKeyHere": "yourValueHere",
+    "wantABoolean": true,
+    "valueNumber": 3,
+    "nestedObject": {
+        "sampleKey":"sampleValue"
+    }
+}`
+
 class HomePage extends Component {
     constructor(props){
         super(props);
         this.state = {
             endpointName: "",
-            endpointValue: "",
+            endpointValue: defaultText,
             response: null,
             endpointsGot: false,
             allEndpoints: []
@@ -19,13 +28,17 @@ class HomePage extends Component {
     handleInputs = (e) => {
         this.setState({
           ...this.state,
+          response: null,
           [e.currentTarget.name]: e.currentTarget.value
         })
+        console.log(this.state.endpointValue)
+        console.log(typeof(this.state.endpointValue))
     }
 
     submitEndpoint = async (e) => {
         e.preventDefault();
         console.log("FUCK THIS SHIT")
+        this.state.endpointValue = JSON.parse(this.state.endpointValue);
         try{
             console.log("SUBMITTING ENDPOINT")
             const submittedEndpoint = await fetch(backendURL + "new", {
@@ -42,7 +55,8 @@ class HomePage extends Component {
             const parsedResponse = await submittedEndpoint.json();
             console.log(parsedResponse);
             this.setState({
-                response: parsedResponse
+                response: parsedResponse,
+                endpointsGot: false
             })
         } catch(error){
             console.log(error);
@@ -81,9 +95,14 @@ class HomePage extends Component {
                 <div>
                     <h1>create an endpoint</h1>
                     <form onSubmit={this.submitEndpoint}>
+                        <br/>
+                        <br/>
+                        <h6>Choose the name of the endpoint (this is what's actually in the URL)</h6>
                         <input onChange={this.handleInputs} className="input" name="endpointName" type="text" placeholder='endpoint name, e.g. "/test"'/>
                         <br/>
-                        <textarea onChange={this.handleInputs} className="input" name="endpointValue" type="textarea" height="300px" placeholder="The response you want back (in JSON)"/>
+                        <br/>
+                        <h6>Input whatever sample data you want (in JSON!)</h6>
+                        <textarea onChange={this.handleInputs} className="input json" name="endpointValue" type="textarea" placeholder="The response you want back (in JSON)" defaultValue={defaultText}/>
                         <br/>
                         <button className="input" type="submit">Submit</button>
                     </form>
