@@ -128,7 +128,7 @@ class HomePage extends Component {
                         ? 
                         <div>
                             <h4>Found endpoints</h4>
-                            {this.state.allEndpoints.map(endpoint => <FoundEndpoint layerOne={endpoint.layerOne} key={endpoint._id} id={endpoint._id}/>)}
+                            {this.state.allEndpoints.map(endpoint => <FoundEndpoint layerOne={endpoint.layerOne} key={endpoint._id} userId={this.props.id} routeId={endpoint._id} route={Object.keys(endpoint.layerOne)[0]}/>)}
                         </div>
                         :
                         <div>

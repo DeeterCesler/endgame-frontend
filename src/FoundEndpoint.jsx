@@ -2,14 +2,14 @@ import React from "react";
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
 
-
 const FoundEndpoint = (props) => {
+    // console.log("THIS ENDPOINT HING: " + props.endpoint.layerOne)
 
     async function deleteEndpoint(e){
         // e.preventDefault();
         try{
             console.log("DELETING ENDPOINT")
-            const submittedEndpoint = await fetch(backendURL + props.id, {
+            const submittedEndpoint = await fetch(backendURL + props.routeId, {
                 method: "DELETE",
                 headers: {
                     'Access-Control-Allow-Origin': '*',
@@ -25,10 +25,13 @@ const FoundEndpoint = (props) => {
         }
     }
 
+    // for(key in props.endpoint)
+
     return(
         <div>
             <br/>
-            <p>Endpoint route: {JSON.stringify(props.layerOne)}</p>
+            <p>Endpoint route: <code>{backendURL + props.userId + "/" + props.route}</code></p>
+            <p>Expected static JSON: {JSON.stringify(props.layerOne[props.route])}</p>
             <form onSubmit={deleteEndpoint}>
                 <button type="submit">Delete this endpoint?</button>
             </form>
