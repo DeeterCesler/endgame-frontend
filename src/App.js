@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
-import HomePage from './HomePage';
+import HomePage from './EndpointHome';
 import AboutPage from './AboutPage';
 import NewContact from './NewContact/index';
 import AllContactsContainer from './AllContactsContainer';
@@ -125,7 +125,6 @@ class App extends Component {
 
   submitLogin = async (e) => {
     e.preventDefault();
-    console.log(this.state)
     let parsedLogged;
     try{
       console.log("submitting login");
@@ -208,7 +207,6 @@ class App extends Component {
   }
 
   loginRegisterPage = () => {
-    console.log("LAWGED: " + this.state)
     return <LoginRegisterContainer test={this.state.test} loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleInputs={this.handleInputs} submitRegistration={this.submitRegistration}/>
   }
   
@@ -223,16 +221,16 @@ class App extends Component {
   render(){
     return (
         <div className="App">
-          {/* <NavBar loggedIn={this.state.loggedIn}/> */}
+          <NavBar loggedIn={this.state.loggedIn}/>
           <Switch>
             <Route exact path="/" render={this.homepage}/>
-            {/* <Route exact path="/about" render={this.aboutPage}/> */}
+            <Route exact path="/about" render={this.aboutPage}/>
             <Route exact path="/login" render={this.loginRegisterPage}/>
             <Route exact path="/logout" render={this.logoutPage}/>
             <Route exact path="/register" render={this.loginRegisterPage}/>
             <Route exact path="/routes/new" render={this.routesNew}/>
             <Route exact path="/routes/all" render={this.routesAll}/>
-            {/* <Route exact path="/help" render={this.helpPage}/> */}
+            <Route exact path="/help" render={this.helpPage}/>
           </Switch>
         </div>
     );

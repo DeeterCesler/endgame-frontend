@@ -9,14 +9,12 @@ const FoundEndpoint = (props) => {
         // e.preventDefault();
         try{
             console.log("DELETING ENDPOINT")
-            const submittedEndpoint = await fetch(backendURL + props.routeId, {
+            await fetch(backendURL + props.routeId, {
                 method: "DELETE",
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json',
                     "authorization": localStorage.getItem("token")
-                    // 'Access-Control-Allow-Headers': "POST",
-                    // 'credentials': 'same-origin',
                 }
             })
 

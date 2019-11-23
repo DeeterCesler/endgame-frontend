@@ -32,20 +32,25 @@ class HomePage extends Component {
           [e.currentTarget.name]: e.currentTarget.value
         })
         console.log(this.state.endpointValue)
-        console.log(typeof(this.state.endpointValue))
     }
 
     submitEndpoint = async (e) => {
         e.preventDefault();
-        if(this.state.endpointName[0] == "/") {
-            console.log("BEFORE: " + this.state.endpointName);
+        if(this.state.endpointName[0] === "/") {
             const correctedName = await this.state.endpointName.slice(1);
             await this.setState({
                 endpointName: correctedName
             })
-            console.log("AFTER: " + this.state.endpointName);
         }
-        this.state.endpointValue = JSON.parse(this.state.endpointValue); // this is to prevent from getting double Stringified later on
+        /* 
+        *  This if-check is just in case someone double-submits two endpoints without 
+        *  changing the value, it prevents an error from trying to parse something
+        *  that's already parsed.
+        */
+        if(typeof(this.state.endpointValue) === "string"){
+            this.state.endpointValue = JSON.parse(this.state.endpointValue); // this is to prevent from getting double Stringified later on
+        }
+
         try{
             console.log("SUBMITTING ENDPOINT")
             const submittedEndpoint = await fetch(backendURL + "new", {
@@ -60,10 +65,9 @@ class HomePage extends Component {
                 }
             })
             const parsedResponse = await submittedEndpoint.json();
-            console.log(parsedResponse);
             this.setState({
                 response: parsedResponse,
-                endpointsGot: false
+                endpointsGot: false,
             })
         } catch(error){
             console.log(error);
@@ -97,7 +101,6 @@ class HomePage extends Component {
     render(){
         return (
             <div>
-                {/* {this.props.loggedIn ? <Redirect to="/login"/> : <div/> } */}
                 {this.props.loggedIn ?
                 <div>
                     <br/>
@@ -152,11 +155,7 @@ class HomePage extends Component {
                     }
                 </div>
                 : 
-                <div>
-                    <br/>
-                    <br/>
-                    <h2>You need to <a href="/login">log in first</a> create an endpoint.</h2>
-                </div>
+                <Redirect to="/login"/>
                 }
             </div>
         )

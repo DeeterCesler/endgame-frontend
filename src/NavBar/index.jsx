@@ -19,17 +19,11 @@ export default class NavBar extends Component{
         return(
             <div id="navbar">
                 <Navbar color="light" light expand="md">
-                    <NavbarBrand href="/">FollowUp - Beta version 1.0</NavbarBrand>
+                    <NavbarBrand href="/">Endgame - Alpha v1</NavbarBrand>
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
                         { this.props.loggedIn ? 
                             <Nav className="ml-auto" navbar>
-                                    <NavItem>
-                                        <NavLink href="/contacts/all">See all contacts</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink href="/contacts/new">New contact</NavLink>
-                                    </NavItem>
                                     <NavItem>
                                         <NavLink href="/logout">Logout</NavLink>
                                     </NavItem>
@@ -39,12 +33,6 @@ export default class NavBar extends Component{
                             </Nav>
                                 :
                             <Nav className="ml-auto" navbar>
-                                <NavItem>
-                                    <NavLink href="/register">Register</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink href="/login">Login</NavLink>
-                                </NavItem>
                                 <NavItem>
                                     <NavLink href="/help">Help</NavLink>
                                 </NavItem>

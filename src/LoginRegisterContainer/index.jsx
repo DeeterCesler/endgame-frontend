@@ -1,29 +1,28 @@
-import React, {Component} from "react";
+import React from "react";
 import Login from "../Login";
 import Registration from "../Registration";
 import { Redirect } from 'react-router-dom';
+import AboutPage from "../AboutPage";
 
-class LoginRegisterContainer extends Component {
-    constructor(props){
-        super(props);
-    }
-    render(){
-        return(
+const LoginRegisterContainer = (props) => {
+    return(
+        <div>
+            {console.log("LOGGED: " + props.test)}
             <div>
-                {console.log("LOGGED: " + this.props.test)}
-                {/* {this.props.loggedIn ? <Redirect to="/"/>: <div/> } */}
-                <div>
-                    {this.props.loggedIn ? <Redirect to="/"/>: <div/> }
-                    <div className="spacer"/>
-                    <Login submitRegistration={this.props.submitRegistration} handleInputs={this.props.handleInputs} submitLogin={this.props.submitLogin} loggedIn={this.props.loggedIn}/>
-                    <div className="mini-spacer"/>
-                    {/* When SaaS-ready, replace "Registration" with a buy/sign-up page */}
-                    <Registration submitRegistration={this.props.submitRegistration} handleInputs={this.props.handleInputs} submitLogin={this.props.submitLogin} loggedIn={this.props.loggedIn}/>
-                    <div className="spacer"/>
-                </div>
+                {props.loggedIn ? <Redirect to="/"/>: <div/> }
+                <div className="mini-spacer"/>
+                <AboutPage/>
+                <br/>
+                <br/>
+                {/* <h4>To get started, you first need to log in.</h4> */}
+                <Login submitRegistration={props.submitRegistration} handleInputs={props.handleInputs} submitLogin={props.submitLogin} loggedIn={props.loggedIn}/>
+                <div className="spacer"/>
+                {/* When SaaS-ready, replace "Registration" with a buy/sign-up page */}
+                <Registration submitRegistration={props.submitRegistration} handleInputs={props.handleInputs} submitLogin={props.submitLogin} loggedIn={props.loggedIn}/>
+                <div className="spacer"/>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default LoginRegisterContainer;
