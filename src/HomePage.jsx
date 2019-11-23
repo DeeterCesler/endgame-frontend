@@ -37,8 +37,15 @@ class HomePage extends Component {
 
     submitEndpoint = async (e) => {
         e.preventDefault();
-        console.log("FUCK THIS SHIT")
-        this.state.endpointValue = JSON.parse(this.state.endpointValue);
+        if(this.state.endpointName[0] == "/") {
+            console.log("BEFORE: " + this.state.endpointName);
+            const correctedName = await this.state.endpointName.slice(1);
+            await this.setState({
+                endpointName: correctedName
+            })
+            console.log("AFTER: " + this.state.endpointName);
+        }
+        this.state.endpointValue = JSON.parse(this.state.endpointValue); // this is to prevent from getting double Stringified later on
         try{
             console.log("SUBMITTING ENDPOINT")
             const submittedEndpoint = await fetch(backendURL + "new", {
@@ -93,6 +100,8 @@ class HomePage extends Component {
                 {/* {this.props.loggedIn ? <Redirect to="/login"/> : <div/> } */}
                 {this.props.loggedIn ?
                 <div>
+                    <br/>
+                    <br/>
                     <h1>create an endpoint</h1>
                     <form onSubmit={this.submitEndpoint}>
                         <br/>
@@ -111,7 +120,7 @@ class HomePage extends Component {
                         this.state.response != null ?
                         <div>
                             <p>Endpoint successfully submitted.</p>
-                            <p>Your new endpoint can be hit at <br/><code>https://endpoint-backend.herokuapp.com/{this.props.id}/{this.state.endpointName}/</code></p>
+                            <p>Your new endpoint can be hit at <br/><code>{backendURL}{this.props.id}/{this.state.endpointName}/</code></p>
                         </div>
                         : <div/>
                     }
@@ -120,7 +129,7 @@ class HomePage extends Component {
                     <br/>
                     <h3>Your unique ID is <strong>{this.props.id}</strong></h3> 
                     <p>To use this, copy down your unique ID number. <br/> When you make an endpoint above, you can access your endpoint by using your id in the URL.</p>
-                    <p>E.g., when you hit <br/><code>https://endpoint-backend.herokuapp.com/{this.props.id}/EndpointName</code><br/> then the JSON response will be the value you put in above.</p>
+                    <p>E.g., when you hit <br/><code>{backendURL}{this.props.id}/EndpointName</code><br/> then the JSON response will be the value you put in above.</p>
                     <br/>
                     <br/>
                     <br/>
@@ -136,6 +145,9 @@ class HomePage extends Component {
                             <form onSubmit={this.getAllEndpoints}>
                                 <button type="submit">Reveal</button>
                             </form>
+                            <br/>
+                            <br/>
+                            <br/>
                         </div>
                     }
                 </div>

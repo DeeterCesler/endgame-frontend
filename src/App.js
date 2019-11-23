@@ -30,7 +30,6 @@ class App extends Component {
     if(localStorage.getItem("token") !== "null"){
       try{
         const targetUrl = backendURL + "auth/verify";
-        console.log("GETTING THIS SHIT, bruh")
         const getUser = await fetch(targetUrl, {
           method: 'POST',
           // body: localStorage.token,
