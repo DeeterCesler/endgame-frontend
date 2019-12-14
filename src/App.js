@@ -3,8 +3,6 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import HomePage from './EndpointHome';
 import AboutPage from './AboutPage';
-import NewContact from './NewContact/index';
-import AllContactsContainer from './AllContactsContainer';
 import NavBar from './NavBar';
 import LoginRegisterContainer from './LoginRegisterContainer';
 import LogoutPage from './LogoutPage';
@@ -188,22 +186,6 @@ class App extends Component {
   
   aboutPage = () => {
     return <AboutPage/>
-  }
-
-  newContact = () => {
-    return <NewContact/>
-  }
-  
-  allContacts = () => {
-    return this.state.email != null
-    ? <AllContactsContainer email={this.state.email}/>
-    : 
-    <div className="black-floater">
-        <div className="spacer">.</div>
-        <p>
-          You need to log in to view your contacts.
-        </p>
-      </div>
   }
 
   loginRegisterPage = () => {
