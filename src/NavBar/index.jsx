@@ -19,7 +19,7 @@ export default class NavBar extends Component{
         return(
             <div id="navbar">
                 <Navbar color="light" light expand="md">
-                    <NavbarBrand href="/">Endgame - Alpha v1</NavbarBrand>
+                    <NavbarBrand href="/">Fetchspot - Alpha v1.1</NavbarBrand>
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
                         { this.props.loggedIn ? 
