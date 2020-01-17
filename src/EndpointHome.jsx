@@ -110,7 +110,7 @@ class HomePage extends Component {
                         <br/>
                         <br/>
                         <h6>Choose the name of the endpoint (this is what's actually in the URL)</h6>
-                        <input onChange={this.handleInputs} className="input" name="endpointName" type="text" placeholder='endpoint name, e.g. "/test"'/>
+                        <input onChange={this.handleInputs} className="input" name="endpointName" type="text" placeholder='endpoint name, e.g. "/endpoint" or even "/v1/nested/endpoints"'/>
                         <br/>
                         <br/>
                         <h6>Input whatever sample data you want (in JSON!)</h6>

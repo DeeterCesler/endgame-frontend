@@ -55,7 +55,6 @@ body {
 }
 
 .background{
-  background: url("./img/home-background-2.jpg");
   /* background-color: #3f3f3f; */
   background-size: cover;
   background-repeat: none;

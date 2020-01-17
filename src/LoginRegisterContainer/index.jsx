@@ -8,7 +8,7 @@ const LoginRegisterContainer = (props) => {
     return(
         <div>
             {console.log("LOGGED: " + props.test)}
-            <div>
+            <div className="container">
                 {props.loggedIn ? <Redirect to="/"/>: <div/> }
                 <div className="mini-spacer"/>
                 <AboutPage/>
