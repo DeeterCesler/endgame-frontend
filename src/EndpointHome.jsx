@@ -34,14 +34,19 @@ class HomePage extends Component {
         console.log(this.state.endpointValue)
     }
 
-    submitEndpoint = async (e) => {
-        e.preventDefault();
+    clearSlashPrefix = async () => {
         if(this.state.endpointName[0] === "/") {
             const correctedName = await this.state.endpointName.slice(1);
             await this.setState({
                 endpointName: correctedName
             })
+            await this.clearSlashPrefix();
         }
+    }
+
+    submitEndpoint = async (e) => {
+        e.preventDefault();
+        await this.clearSlashPrefix();
         /* 
         *  This if-check is just in case someone double-submits two endpoints without 
         *  changing the value, it prevents an error from trying to parse something
