@@ -1,10 +1,6 @@
 import React, {Component} from "react";
 import { Redirect } from "react-router-dom";
 import FoundEndpoint from "./FoundEndpoint";
-import Editor from 'react-simple-code-editor';
-import Prism from "prismjs";
-// import 'prismjs/components/prism-js';
-// import "prism.css";
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
 
