@@ -1,6 +1,10 @@
 import React, {Component} from "react";
 import { Redirect } from "react-router-dom";
 import FoundEndpoint from "./FoundEndpoint";
+import Editor from 'react-simple-code-editor';
+import Prism from "prismjs";
+// import 'prismjs/components/prism-js';
+// import "prism.css";
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
 
@@ -119,7 +123,7 @@ class HomePage extends Component {
                         <br/>
                         <br/>
                         <h6>Input whatever sample data you want (in JSON!)</h6>
-                        <textarea onChange={this.handleInputs} className="input json" name="endpointValue" type="textarea" placeholder="The response you want back (in JSON)" defaultValue={defaultText}/>
+                        <code className="language-javascript"><textarea onChange={this.handleInputs} className="input json" name="endpointValue" type="textarea" placeholder="The response you want back (in JSON)" defaultValue={defaultText}/></code>
                         <br/>
                         <button className="input" type="submit">Submit</button>
                     </form>
