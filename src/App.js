@@ -6,6 +6,8 @@ import AboutPage from './AboutPage';
 import NavBar from './NavBar';
 import LoginRegisterContainer from './LoginRegisterContainer';
 import LogoutPage from './LogoutPage';
+import ResetPasswordAttempt from './ResetPasswordAttempt';
+import ResetPassword from './ResetPassword';
 import HelpPage from './HelpPage';
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
@@ -80,7 +82,7 @@ class App extends Component {
 
 
   componentDidMount(){
-    this.checkForCookie();
+    // this.checkForCookie();
   }
 
   handleInputs = (e) => {
@@ -176,6 +178,60 @@ class App extends Component {
     })
   }
 
+  submitReset = async (e) => {
+    e.preventDefault();
+    let parsedLogged;
+    try{
+      console.log("submitting reset (maybe)");
+      const targetUrl = backendURL  + 'auth/reset';
+      const loggedUser = await fetch(targetUrl, {
+        method: 'POST',
+        body: JSON.stringify(this.state),
+        headers: {
+          'Access-Control-Allow-Origin': targetUrl,
+          'Content-Type': 'application/json',
+          'credentials': 'same-origin',
+        } 
+      });
+      parsedLogged = await loggedUser.json();
+      // res => setToken(res.token);
+      if(parsedLogged.status === 200){
+        console.log(parsedLogged)
+      } 
+      else if (parsedLogged.status === 500){
+        console.log("INTERNAL SERVER ERROR")
+      } else {
+        console.log("parsed log and shiiiiit:", parsedLogged);
+        alert("LOGIN FAILED")
+      }
+    }catch(err){
+      // console.log("parsed: ", parsedLogged);
+      console.log(parsedLogged);
+    }
+  }
+
+  setNewPassword = async (e) => {
+    e.preventDefault();
+    try{
+      console.log("resetting password fr");
+      const targetUrl = backendURL  + 'auth/reset/confirm';
+      const newPass = await fetch(targetUrl, {
+        method: 'POST',
+        body: JSON.stringify({
+          id: window.location.pathname.slice(15),
+          password: this.state.password
+        }),
+        headers: {
+          'Access-Control-Allow-Origin': targetUrl,
+          'Content-Type': 'application/json',
+          'credentials': 'same-origin',
+        } 
+      });
+    } catch (err) {
+      console.log('ERR: ' + err)
+    }
+  }
+
   setToken = (token) => {
     localStorage.setItem("token", token);
   }
@@ -195,6 +251,14 @@ class App extends Component {
   logoutPage = () => {
     return <LogoutPage logout={this.logout}/>
   }
+
+  resetPasswordAttempt = () => {
+    return <ResetPasswordAttempt submitReset={this.submitReset} handleInputs={this.handleInputs} />
+  }
+
+  resetPassword = (props) => {
+    return <ResetPassword {...props} setNewPassword={this.setNewPassword} handleInputs={this.handleInputs} />
+  }
   
   helpPage = () => {
     return <HelpPage/>
@@ -209,6 +273,8 @@ class App extends Component {
             <Route exact path="/about" render={this.aboutPage}/>
             <Route exact path="/login" render={this.loginRegisterPage}/>
             <Route exact path="/logout" render={this.logoutPage}/>
+            <Route exact path="/reset" render={this.resetPasswordAttempt}/>
+            <Route exact path="/reset/confirm/:id" render={(props) => this.resetPassword(props)}/>
             <Route exact path="/register" render={this.loginRegisterPage}/>
             <Route exact path="/routes/new" render={this.routesNew}/>
             <Route exact path="/routes/all" render={this.routesAll}/>
