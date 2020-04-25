@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import { Redirect } from "react-router-dom";
+import { Alert } from "reactstrap";
 import FoundEndpoint from "./FoundEndpoint";
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
@@ -29,7 +30,8 @@ class HomePage extends Component {
         this.setState({
           ...this.state,
           response: null,
-          [e.currentTarget.name]: e.currentTarget.value
+          [e.currentTarget.name]: e.currentTarget.value,
+          message: null,
         })
         console.log(this.state.endpointValue)
     }
@@ -52,30 +54,42 @@ class HomePage extends Component {
         *  changing the value, it prevents an error from trying to parse something
         *  that's already parsed.
         */
+       let success;
         if(typeof(this.state.endpointValue) === "string"){
-            this.state.endpointValue = JSON.parse(this.state.endpointValue); // this is to prevent from getting double Stringified later on
+            try {
+                this.state.endpointValue = JSON.parse(this.state.endpointValue); // this is to prevent from getting double Stringified later on
+                success = true;
+            } catch (err) {
+                console.log('this shite no parsing');
+                this.setState({
+                    ...this.state,
+                    message: "It looks like that wasn't JSON. Please look it over and try again.",
+                })
+            }
         }
 
-        try{
-            console.log("SUBMITTING ENDPOINT")
-            const submittedEndpoint = await fetch(backendURL + "new", {
-                method: "POST",
-                body: JSON.stringify(this.state),
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json',
-                    "authorization": localStorage.getItem("token")
-                    // 'Access-Control-Allow-Headers': "POST",
-                    // 'credentials': 'same-origin',
-                }
-            })
-            const parsedResponse = await submittedEndpoint.json();
-            this.setState({
-                response: parsedResponse,
-                endpointsGot: false,
-            })
-        } catch(error){
-            console.log(error);
+        if (success) {
+            try{
+                console.log("SUBMITTING ENDPOINT")
+                const submittedEndpoint = await fetch(backendURL + "new", {
+                    method: "POST",
+                    body: JSON.stringify(this.state),
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'Content-Type': 'application/json',
+                        "authorization": localStorage.getItem("token")
+                        // 'Access-Control-Allow-Headers': "POST",
+                        // 'credentials': 'same-origin',
+                    }
+                })
+                const parsedResponse = await submittedEndpoint.json();
+                this.setState({
+                    response: parsedResponse,
+                    endpointsGot: false,
+                })
+            } catch(error){
+                console.log(error);
+            }
         }
     }
 
@@ -124,6 +138,10 @@ class HomePage extends Component {
                         <button className="input" type="submit">Submit</button>
                     </form>
                     <br/>
+                    <div className="container">
+                        { this.state.message ? <Alert color="danger">{this.state.message}</Alert> : <div/> }
+                    </div>
+                    <br/>
                     {
                         this.state.response != null ?
                         <div>
@@ -132,9 +150,6 @@ class HomePage extends Component {
                         </div>
                         : <div/>
                     }
-                    <br/>
-                    <br/>
-                    <br/>
                     <h3>Your unique ID is <strong>{this.props.id}</strong></h3> 
                     <p>To use this, copy down your unique ID number. <br/> When you make an endpoint above, you can access your endpoint by using your id in the URL.</p>
                     <p>E.g., when you hit <br/><code>{backendURL}{this.props.id}/EndpointName</code><br/> then the JSON response will be the value you put in above.</p>
