@@ -1,10 +1,11 @@
 import React from "react";
-import {Form, Input, Button} from "reactstrap";
+import { Form, Input, Button, Alert } from "reactstrap";
 
 const Registration = (props) => {
     return(
         <div>
             <h3>Register</h3>
+            { props.message ? <Alert className="incorrect" color="danger">Email is already in use.</Alert> : <div/> }
             <Form className="register" onSubmit={props.submitRegistration}>
                 <Input placeholder="Your name" name="name"onChange={props.handleInputs}/>
                 <Input placeholder="Password" type="password" name="password" onChange={props.handleInputs}/>

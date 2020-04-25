@@ -17,7 +17,7 @@ const LoginRegisterContainer = (props) => {
                 <Login submitRegistration={props.submitRegistration} handleInputs={props.handleInputs} submitLogin={props.submitLogin} loggedIn={props.loggedIn} message={props.message} />
                 <div className="spacer"/>
                 {/* When SaaS-ready, replace "Registration" with a buy/sign-up page */}
-                <Registration submitRegistration={props.submitRegistration} handleInputs={props.handleInputs} submitLogin={props.submitLogin} loggedIn={props.loggedIn}/>
+                <Registration submitRegistration={props.submitRegistration} handleInputs={props.handleInputs} submitLogin={props.submitLogin} loggedIn={props.loggedIn} message={props.message} />
                 <div className="spacer"/>
             </div>
         </div>

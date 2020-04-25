@@ -116,6 +116,12 @@ class App extends Component {
         localStorage.setItem("token", parsedResponse.token);
         localStorage.setItem("email", parsedResponse.data.email);
         localStorage.setItem("id", parsedResponse.data._id);
+      } else if (parsedResponse.status === 401) {
+        const failedRegistration = "Email is already registered.";
+        this.setState({
+          ...this.state,
+          message: failedRegistration,
+        });
       } else if (parsedResponse.status === 500){
         console.log("INTERNAL SERVER ERROR")
       }
