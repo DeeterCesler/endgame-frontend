@@ -7,7 +7,6 @@ import AboutPage from "../AboutPage";
 const LoginRegisterContainer = (props) => {
     return(
         <div>
-            {console.log("LOGGED: " + props.test)}
             <div className="container">
                 {props.loggedIn ? <Redirect to="/"/>: <div/> }
                 <div className="mini-spacer"/>
@@ -15,7 +14,7 @@ const LoginRegisterContainer = (props) => {
                 <br/>
                 <br/>
                 {/* <h4>To get started, you first need to log in.</h4> */}
-                <Login submitRegistration={props.submitRegistration} handleInputs={props.handleInputs} submitLogin={props.submitLogin} loggedIn={props.loggedIn}/>
+                <Login submitRegistration={props.submitRegistration} handleInputs={props.handleInputs} submitLogin={props.submitLogin} loggedIn={props.loggedIn} message={props.message} />
                 <div className="spacer"/>
                 {/* When SaaS-ready, replace "Registration" with a buy/sign-up page */}
                 <Registration submitRegistration={props.submitRegistration} handleInputs={props.handleInputs} submitLogin={props.submitLogin} loggedIn={props.loggedIn}/>

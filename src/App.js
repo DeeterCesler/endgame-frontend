@@ -20,7 +20,7 @@ class App extends Component {
       email: null,
       contact: null,
       id: null,
-      test: "hey"
+      message: null,
     }
   }
 
@@ -88,6 +88,7 @@ class App extends Component {
   handleInputs = (e) => {
     this.setState({
       ...this.state,
+      message: null,
       [e.currentTarget.name]: e.currentTarget.value
     })
   }
@@ -139,8 +140,7 @@ class App extends Component {
         } 
       });
       parsedLogged = await loggedUser.json();
-      // res => setToken(res.token);
-      if(parsedLogged.status === 200){
+      if (parsedLogged.status === 200) {
         this.setState({
           loggedIn: true,
           email: parsedLogged.data.email,
@@ -151,7 +151,14 @@ class App extends Component {
         localStorage.setItem("email", parsedLogged.data.email);
         localStorage.setItem("id", parsedLogged.data._id);
       } 
-      else if (parsedLogged.status === 500){
+      else if (parsedLogged.status === 401) {
+        const failedLogin = "Username or password is incorrect.";
+        this.setState({
+          ...this.state,
+          message: failedLogin,
+        });
+      }
+      else if (parsedLogged.status === 500) {
         console.log("INTERNAL SERVER ERROR")
       } else {
         console.log("parsed log and shiiiiit:", parsedLogged);
@@ -245,7 +252,7 @@ class App extends Component {
   }
 
   loginRegisterPage = () => {
-    return <LoginRegisterContainer test={this.state.test} loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleInputs={this.handleInputs} submitRegistration={this.submitRegistration}/>
+    return <LoginRegisterContainer loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleInputs={this.handleInputs} submitRegistration={this.submitRegistration} message={this.state.message} />
   }
   
   logoutPage = () => {

@@ -76,9 +76,9 @@ body {
   color: white;
 }
 
-.fade {
+/* .fade {
   background-image: linear-gradient(90deg, rgba(0,0,0,0) 0%, #fff 50%, rgba(13,88,255) 75%);
-}
+} */
 
 #navbar {
   color: #000;
@@ -103,7 +103,7 @@ body {
   }
 
   .register Input, .login Input {
-    margin: 1em;
+    margin: 1em 0;
   }
 }
 @media only screen and (max-width: 700px) {
@@ -201,4 +201,10 @@ body {
 
 .json{
   min-height: 250px;
+}
+
+.incorrect {
+  width: 40%;
+  margin: auto;
+  text-align: center;
 }
