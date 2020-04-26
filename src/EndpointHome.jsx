@@ -32,8 +32,30 @@ class HomePage extends Component {
           response: null,
           [e.currentTarget.name]: e.currentTarget.value,
           message: null,
+          endpointsGot: false,
         })
         console.log(this.state.endpointValue)
+    }
+
+    deleteEndpoint = async (e, endpoint) => {
+        e.preventDefault();
+        try{
+            console.log("DELETING ENDPOINT")
+            await fetch(backendURL + endpoint._id, {
+                method: "DELETE",
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json',
+                    "authorization": localStorage.getItem("token")
+                }
+            })
+            this.setState({
+                ...this.state,
+                endpointsGot: false,
+            })
+        } catch(error){
+            console.log(error);
+        }
     }
 
     clearSlashPrefix = async () => {
@@ -59,6 +81,9 @@ class HomePage extends Component {
             try {
                 this.state.endpointValue = JSON.parse(this.state.endpointValue); // this is to prevent from getting double Stringified later on
                 success = true;
+                if (!this.state.endpointName.length) {
+                    throw Error('Empty URL submitted.');
+                }
             } catch (err) {
                 console.log('this shite no parsing');
                 this.setState({
@@ -67,6 +92,15 @@ class HomePage extends Component {
                 })
             }
         }
+        
+        if (!this.state.endpointName.length) {
+            this.setState({
+                ...this.state,
+                message: "No endpoint name submitted. Add a name for the URL you want to create and try again.",
+            })
+            success = false;
+        }
+        
 
         if (success) {
             try{
@@ -160,7 +194,7 @@ class HomePage extends Component {
                         ? 
                         <div>
                             <h4>Found endpoints</h4>
-                            {this.state.allEndpoints.map(endpoint => <FoundEndpoint layerOne={endpoint.layerOne} key={endpoint._id} userId={this.props.id} routeId={endpoint._id} route={Object.keys(endpoint.layerOne)[0]}/>)}
+                            {this.state.allEndpoints.map(endpoint => <FoundEndpoint layerOne={endpoint.layerOne} key={endpoint._id} userId={this.props.id} routeId={endpoint._id} route={Object.keys(endpoint.layerOne)[0]} deleteEndpoint={(e) => {this.deleteEndpoint(e, endpoint)}} />)}
                         </div>
                         :
                         <div>
