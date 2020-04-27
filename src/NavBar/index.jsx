@@ -30,6 +30,9 @@ export default class NavBar extends Component{
                                     <NavItem>
                                         <NavLink href="/help">Help</NavLink>
                                     </NavItem>
+                                    <NavItem>
+                                        <NavLink href="/account">Account</NavLink>
+                                    </NavItem>
                             </Nav>
                                 :
                             <Nav className="ml-auto" navbar>

@@ -9,6 +9,7 @@ import LogoutPage from './LogoutPage';
 import ResetPasswordAttempt from './ResetPasswordAttempt';
 import ResetPassword from './ResetPassword';
 import HelpPage from './HelpPage';
+import AccountPage from './AccountPage';
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
 
@@ -21,6 +22,7 @@ class App extends Component {
       contact: null,
       id: null,
       message: null,
+      name: null,
     }
   }
 
@@ -47,7 +49,8 @@ class App extends Component {
           this.setState({
             loggedIn: true,
             email: parsedResponse.email,
-            id: parsedResponse.id
+            id: parsedResponse.id,
+            name: parsedResponse.name
           })
           console.log("RETRIEVED ID: " + this.state.id)
           if(localStorage.getItem("loggedIn") !== "true"){
@@ -277,6 +280,10 @@ class App extends Component {
     return <HelpPage/>
   }
 
+  accountPage = () => {
+    return <AccountPage email={this.state.email} name={this.state.name} />
+  }
+
   render(){
     return (
         <div className="App">
@@ -292,6 +299,7 @@ class App extends Component {
             <Route exact path="/routes/new" render={this.routesNew}/>
             <Route exact path="/routes/all" render={this.routesAll}/>
             <Route exact path="/help" render={this.helpPage}/>
+            <Route exact path="/account" render={this.accountPage}/>
           </Switch>
         </div>
     );
