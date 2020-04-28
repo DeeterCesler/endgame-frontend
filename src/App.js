@@ -10,6 +10,7 @@ import ResetPasswordAttempt from './ResetPasswordAttempt';
 import ResetPassword from './ResetPassword';
 import HelpPage from './HelpPage';
 import AccountPage from './AccountPage';
+import OwnerPage from './OwnerPage';
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
 
@@ -23,6 +24,10 @@ class App extends Component {
       id: null,
       message: null,
       name: null,
+      owner: null,
+      isLoaded: false,
+      numUsersGot: null,
+      users: null,
     }
   }
 
@@ -47,12 +52,14 @@ class App extends Component {
         console.log("parsedREsponse: ", parsedResponse);
         if(parsedResponse.status === 200){
           this.setState({
+            ...this.state,
             loggedIn: true,
             email: parsedResponse.email,
             id: parsedResponse.id,
-            name: parsedResponse.name
+            name: parsedResponse.name,
+            owner: parsedResponse.owner,
+            isLoaded: true,
           })
-          console.log("RETRIEVED ID: " + this.state.id)
           if(localStorage.getItem("loggedIn") !== "true"){
             localStorage.setItem("loggedIn", true);
           }
@@ -248,6 +255,37 @@ class App extends Component {
     }
   }
 
+  getNumberofUsers = async (e) => {
+    e.preventDefault();
+    try {
+      console.log('Getting total # of users.');
+      const targetUrl = backendURL  + 'owner/getUsers';
+      const users = await fetch(targetUrl, {
+        method: 'GET',
+        headers: {
+          'Access-Control-Allow-Origin': targetUrl,
+          'Content-Type': 'application/json',
+          'credentials': 'same-origin',
+          "Authorization": localStorage.getItem("token"),
+        } 
+      });
+      const parsedUsers = await users.json();
+      console.log('users: ' + JSON.stringify(parsedUsers.data))
+      // parsedUsers.data.map((user) => {
+      //   if(user.endpoints) {
+      //     console.log('HEEEEELP ' + JSON.stringify(user.endpoints.length))
+      //   }
+      // })
+      this.setState({
+        ...this.state,
+        users: parsedUsers.data,
+        numUsersGot: true,
+      })
+    } catch(e) {
+      console.log('Error: ' + e);
+    }
+  }
+
   setToken = (token) => {
     localStorage.setItem("token", token);
   }
@@ -281,13 +319,17 @@ class App extends Component {
   }
 
   accountPage = () => {
-    return <AccountPage email={this.state.email} name={this.state.name} />
+    return <AccountPage email={this.state.email} name={this.state.name} owner={this.state.owner} />
+  }
+
+  ownerPage = () => {
+    return <OwnerPage email={this.state.email} name={this.state.name} owner={this.state.owner} isLoaded={this.state.isLoaded} getNumberofUsers={this.getNumberofUsers} numUsersGot={this.state.numUsersGot} users={this.state.users} />
   }
 
   render(){
     return (
         <div className="App">
-          <NavBar loggedIn={this.state.loggedIn}/>
+          <NavBar loggedIn={this.state.loggedIn} owner={this.state.owner} />
           <Switch>
             <Route exact path="/" render={this.homepage}/>
             <Route exact path="/about" render={this.aboutPage}/>
@@ -300,6 +342,7 @@ class App extends Component {
             <Route exact path="/routes/all" render={this.routesAll}/>
             <Route exact path="/help" render={this.helpPage}/>
             <Route exact path="/account" render={this.accountPage}/>
+            <Route exact path="/owner" render={this.ownerPage}/>
           </Switch>
         </div>
     );

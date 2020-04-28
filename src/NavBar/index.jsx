@@ -33,6 +33,13 @@ export default class NavBar extends Component{
                                     <NavItem>
                                         <NavLink href="/account">Account</NavLink>
                                     </NavItem>
+                                    { this.props.owner ?
+                                        <NavItem>
+                                            <NavLink href="/owner">Owner Panel</NavLink>
+                                        </NavItem>
+                                        :
+                                        null
+                                    }
                             </Nav>
                                 :
                             <Nav className="ml-auto" navbar>
