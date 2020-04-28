@@ -33,7 +33,6 @@ class App extends Component {
 
 
   checkForCookie = async () => {
-    console.log("getting token: ", localStorage.getItem("token"))
     if(localStorage.getItem("token") !== "null"){
       try{
         const targetUrl = backendURL + "auth/verify";
@@ -49,7 +48,6 @@ class App extends Component {
           } 
         });
         const parsedResponse = await getUser.json();
-        console.log("parsedREsponse: ", parsedResponse);
         if(parsedResponse.status === 200){
           this.setState({
             ...this.state,
@@ -63,7 +61,6 @@ class App extends Component {
           if(localStorage.getItem("loggedIn") !== "true"){
             localStorage.setItem("loggedIn", true);
           }
-          // localStorage.setItem("email", parsedResponse.);
         } else if (parsedResponse.status === 500){
           console.log("INTERNAL SERVER ERROR")
         } else if (parsedResponse.status === 404){
@@ -270,12 +267,6 @@ class App extends Component {
         } 
       });
       const parsedUsers = await users.json();
-      console.log('users: ' + JSON.stringify(parsedUsers.data))
-      // parsedUsers.data.map((user) => {
-      //   if(user.endpoints) {
-      //     console.log('HEEEEELP ' + JSON.stringify(user.endpoints.length))
-      //   }
-      // })
       this.setState({
         ...this.state,
         users: parsedUsers.data,
