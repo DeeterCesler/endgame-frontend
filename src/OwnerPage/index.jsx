@@ -2,6 +2,9 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 
 const OwnerPage = (props) => {
+    console.log('lol= ' + JSON.stringify(props))
+    const thisYear = new Date().getFullYear();
+    const thisMonth = new Date().getMonth();
     return(
         <div>
             { props.isLoaded ? 
@@ -16,16 +19,19 @@ const OwnerPage = (props) => {
                             <p>Number of users: { props.users.length }</p>
                             <strong>
                                 <div className="row">
-                                    <span className="col-4">User's name</span>
-                                    <span className="col-4">User's email</span>
-                                    <span className="col-4">User's # of API endpoints</span>
+                                    <span className="col-3">User's name</span>
+                                    <span className="col-3">User's email</span>
+                                    <span className="col-3">User's # of API endpoints</span>
+                                    <span className="col-3">User's # of calls this month</span>
                                 </div>
                             </strong>
                             {props.users.map((user) => {
                                 return (<div className="row">
-                                    <span className="col-4">{user.name}</span>
-                                    <span className="col-4">{user.email}</span>
-                                    <span className="col-4">{user.endpoints.length}</span>
+                                    <span className="col-3">{user.name}</span>
+                                    <span className="col-3">{user.email}</span>
+                                    <span className="col-3">{user.endpoints.length}</span>
+                                    <span className="col-3">{user.numberOfCalls.details !== undefined ? user.numberOfCalls.details[thisYear][thisMonth] : <span>0</span>}</span>
+                                    {/* <span className="col">{user.endpoints.length}</span> */}
                                 </div>)
                             })}
                         </div>
