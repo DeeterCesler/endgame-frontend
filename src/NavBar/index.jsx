@@ -25,6 +25,9 @@ export default class NavBar extends Component{
                         { this.props.loggedIn ? 
                             <Nav className="ml-auto" navbar>
                                     <NavItem>
+                                        <NavLink href="/">Home</NavLink>
+                                    </NavItem>
+                                    <NavItem>
                                         <NavLink href="/logout">Logout</NavLink>
                                     </NavItem>
                                     <NavItem>
