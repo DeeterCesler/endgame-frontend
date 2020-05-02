@@ -2,9 +2,6 @@ import React from "react";
 import { Form, Input, Button, Alert } from "reactstrap";
 
 const Registration = (props) => {
-    console.log('password: ' + props.password);
-    console.log('passwordCopy: ' + props.passwordCopy);
-    // console.log('password copy: ' + props.passwordCopy);
     let planName;
     if (props.planType) {
         switch (props.planType) {
@@ -30,7 +27,6 @@ const Registration = (props) => {
                 <Input placeholder="Password" type="password" name="password" onChange={props.handleInputs}/>
                 <Input placeholder="Confirm password" type="password" name="passwordCopy" onChange={props.handleInputs}/>
                 <Input placeholder="Your email" name="email" onChange={props.handleInputs}/>
-                {/* if passwords match */}
                 { props.passwordCopy !== null && props.passwordCopy === props.password ?
                     <div>
                         {console.log('pass copy: ' + props.passwordCopy)}

@@ -97,8 +97,6 @@ class App extends Component {
   }
 
   handleInputs = (e) => {
-    console.log('name: ' + e.currentTarget.name);
-    console.log('value: ' + e.currentTarget.value);
     this.setState({
       ...this.state,
       message: null,
@@ -107,23 +105,11 @@ class App extends Component {
   }
 
   handleCheck = async (e) => {
-    console.log('name: ' + e.currentTarget.id)
-    // console.log('target name: ' + e.target)
-    // console.log('value: ' + e.currentTarget.value)
-    // if (e.target) {
-      await this.setState({
-        ...this.state,
-        planType: e.currentTarget.id,
-      })
-      console.log('STATE: ' + JSON.stringify(this.state))
-    // } else {
-    //     await this.setState({
-    //       ...this.state,
-    //       planType: false,
-    //     })
-    //     console.log('STATE: ' + JSON.stringify(this.state))
-    // }
-};
+    await this.setState({
+      ...this.state,
+      planType: e.currentTarget.id,
+    })
+  };
 
   submitRegistration = async (e) => {
     e.preventDefault();
@@ -347,8 +333,6 @@ class App extends Component {
   }
 
   render(){
-    const hoy = new Date();
-    console.log('todaY: ' + hoy);
     return (
         <div className="App">
           <NavBar loggedIn={this.state.loggedIn} owner={this.state.owner} />
