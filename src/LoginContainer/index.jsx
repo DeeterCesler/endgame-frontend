@@ -10,11 +10,18 @@ const LoginContainer = (props) => {
                 {props.loggedIn ? <Redirect to="/"/>: <div/> }
                 <div className="mini-spacer"/>
                 <div className="mini-spacer"/>
+                {console.log('handle inputs: ' + props.handleInputs)}
                 <AboutPage/>
                 <br/>
                 <br/>
                 {/* <h4>To get started, you first need to log in.</h4> */}
-                <Login submitRegistration={props.submitRegistration} handleInputs={props.handleInputs} submitLogin={props.submitLogin} loggedIn={props.loggedIn} message={props.message} />
+                <Login 
+                    submitRegistration={props.submitRegistration} 
+                    handleInputs={props.handleInputs} 
+                    submitLogin={props.submitLogin} 
+                    loggedIn={props.loggedIn} 
+                    message={props.message} 
+                />
                 <div className="mini-spacer"/>
                 <div className="med-spacer"/>
                 <h5>Don't have an account yet?</h5>

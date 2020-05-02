@@ -30,6 +30,8 @@ class App extends Component {
       numUsersGot: null,
       users: null,
       planType: null,
+      password: null,
+      passwordCopy: null,
     }
   }
 
@@ -95,6 +97,8 @@ class App extends Component {
   }
 
   handleInputs = (e) => {
+    console.log('name: ' + e.currentTarget.name);
+    console.log('value: ' + e.currentTarget.value);
     this.setState({
       ...this.state,
       message: null,
@@ -315,7 +319,7 @@ class App extends Component {
   }
 
   registerPage = () => {
-    return <RegisterContainer loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleCheck={this.handleCheck} submitRegistration={this.submitRegistration} message={this.state.message} planType={this.state.planType} />
+    return <RegisterContainer loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleInputs={this.handleInputs} handleCheck={this.handleCheck} submitRegistration={this.submitRegistration} message={this.state.message} planType={this.state.planType} password={this.state.password} passwordCopy={this.state.passwordCopy} />
   }
   
   logoutPage = () => {
@@ -339,10 +343,12 @@ class App extends Component {
   }
 
   ownerPage = () => {
-    return <OwnerPage email={this.state.email} name={this.state.name} owner={this.state.owner} isLoaded={this.state.isLoaded} getNumberofUsers={this.getNumberofUsers} numUsersGot={this.state.numUsersGot} users={this.state.users} />
+    return <OwnerPage email={this.state.email} name={this.state.name} owner={this.state.owner} isLoaded={this.state.isLoaded} getNumberofUsers={this.getNumberofUsers} numUsersGot={this.state.numUsersGot} users={this.state.users} password={this.state.password} passwordCopy={this.state.passwordCopy} />
   }
 
   render(){
+    const hoy = new Date();
+    console.log('todaY: ' + hoy);
     return (
         <div className="App">
           <NavBar loggedIn={this.state.loggedIn} owner={this.state.owner} />
