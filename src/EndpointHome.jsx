@@ -117,10 +117,19 @@ class HomePage extends Component {
                     }
                 })
                 const parsedResponse = await submittedEndpoint.json();
-                this.setState({
-                    response: parsedResponse,
-                    endpointsGot: false,
-                })
+                if (parsedResponse.status === 200) {
+                    this.setState({
+                        ...this.state,
+                        response: parsedResponse,
+                        endpointsGot: false,
+                    })
+                } else if (parsedResponse.status === 500) {
+                    this.setState({
+                        ...this.state,
+                        message: parsedResponse.message,
+                        endpointsGot: false,
+                    })
+                }
             } catch(error){
                 console.log(error);
             }
@@ -167,7 +176,7 @@ class HomePage extends Component {
                         <br/>
                         <br/>
                         <h6>Input whatever sample data you want (in JSON!)</h6>
-                        <code className="language-javascript"><textarea onChange={this.handleInputs} className="input json" name="endpointValue" type="textarea" placeholder="The response you want back (in JSON)" defaultValue={defaultText}/></code>
+                        <code className="language-javascript"><textarea onChange={this.handleInputs} className="input json" name="endpointValue" type="textarea" placeholder="The response you want back (in JSON)" defaultValue={defaultText} maxLength="2000"/></code>
                         <br/>
                         <button className="input" type="submit">Submit</button>
                     </form>
