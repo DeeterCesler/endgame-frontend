@@ -2,9 +2,25 @@ import React from "react";
 import { Form, Input, Button, Alert } from "reactstrap";
 
 const Registration = (props) => {
+    let planName;
+    if (props.planType) {
+        switch (props.planType) {
+            case "planA":
+                planName = 'Lone Wolf Developer';
+                break;
+            case "planB":
+                planName = "Startup";
+                break;
+            case "planC":
+                planName = "Enterprise";
+                break;
+            default:
+                break;
+        }
+    }
     return(
         <div>
-            <h3>Register</h3>
+            <h3>Register for {planName}</h3>
             { props.message && props.message[0] === "E" ? <Alert className="incorrect" color="danger">{props.message}</Alert> : <div/> }
             <Form className="register" onSubmit={props.submitRegistration}>
                 <Input placeholder="Your name" name="name"onChange={props.handleInputs}/>

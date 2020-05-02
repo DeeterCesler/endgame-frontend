@@ -208,3 +208,30 @@ body {
   margin: auto;
   text-align: center;
 }
+
+.forgot {
+  margin-top: 1em;
+}
+
+.deets {
+  font-size: 0.75em;
+}
+
+.product-header {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.show {
+  border: solid #866d00 4px !important;
+  background-color: rgb(255, 254, 242);
+  padding: calc(2em - 2px) !important;
+}
+
+.plan {
+  margin: 10px;
+  padding: 2em;
+  border: dashed #3f3f3f 2px;
+  border-radius: 10px;
+  min-height: 100px;
+}

@@ -4,7 +4,8 @@ import { Route, Switch } from 'react-router-dom';
 import HomePage from './EndpointHome';
 import AboutPage from './AboutPage';
 import NavBar from './NavBar';
-import LoginRegisterContainer from './LoginRegisterContainer';
+import LoginContainer from './LoginContainer';
+import RegisterContainer from './RegisterContainer';
 import LogoutPage from './LogoutPage';
 import ResetPasswordAttempt from './ResetPasswordAttempt';
 import ResetPassword from './ResetPassword';
@@ -28,6 +29,7 @@ class App extends Component {
       isLoaded: false,
       numUsersGot: null,
       users: null,
+      planType: null,
     }
   }
 
@@ -99,6 +101,25 @@ class App extends Component {
       [e.currentTarget.name]: e.currentTarget.value
     })
   }
+
+  handleCheck = async (e) => {
+    console.log('name: ' + e.currentTarget.id)
+    // console.log('target name: ' + e.target)
+    // console.log('value: ' + e.currentTarget.value)
+    // if (e.target) {
+      await this.setState({
+        ...this.state,
+        planType: e.currentTarget.id,
+      })
+      console.log('STATE: ' + JSON.stringify(this.state))
+    // } else {
+    //     await this.setState({
+    //       ...this.state,
+    //       planType: false,
+    //     })
+    //     console.log('STATE: ' + JSON.stringify(this.state))
+    // }
+};
 
   submitRegistration = async (e) => {
     e.preventDefault();
@@ -289,8 +310,12 @@ class App extends Component {
     return <AboutPage/>
   }
 
-  loginRegisterPage = () => {
-    return <LoginRegisterContainer loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleInputs={this.handleInputs} submitRegistration={this.submitRegistration} message={this.state.message} />
+  loginPage = () => {
+    return <LoginContainer loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleInputs={this.handleInputs} submitRegistration={this.submitRegistration} message={this.state.message} />
+  }
+
+  registerPage = () => {
+    return <RegisterContainer loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleCheck={this.handleCheck} submitRegistration={this.submitRegistration} message={this.state.message} planType={this.state.planType} />
   }
   
   logoutPage = () => {
@@ -324,11 +349,11 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={this.homepage}/>
             <Route exact path="/about" render={this.aboutPage}/>
-            <Route exact path="/login" render={this.loginRegisterPage}/>
+            <Route exact path="/login" render={this.loginPage}/>
             <Route exact path="/logout" render={this.logoutPage}/>
             <Route exact path="/reset" render={this.resetPasswordAttempt}/>
             <Route exact path="/reset/confirm/:id" render={(props) => this.resetPassword(props)}/>
-            <Route exact path="/register" render={this.loginRegisterPage}/>
+            <Route exact path="/register" render={this.registerPage}/>
             <Route exact path="/routes/new" render={this.routesNew}/>
             <Route exact path="/routes/all" render={this.routesAll}/>
             <Route exact path="/help" render={this.helpPage}/>
