@@ -11,6 +11,7 @@ const PlanChoiceContainer = (props) => {
             <div className="mini-spacer"/>
             <div className="mini-spacer"/>
             <h1>Choose the plan that works best for you</h1>
+            <p>You've got a full-fledged, 30-day, money-back guarantee on your plan. No questions asked. No risk.</p>
             <br/>
             <div className="mini-spacer"/>
             <div className="row">
