@@ -22,7 +22,7 @@ export default class NavBar extends Component{
                     <NavbarBrand href="/">Fetchspot - Alpha v1.1</NavbarBrand>
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
-                        { this.props.loggedIn ? 
+                        { this.props.isRegistered ? 
                             <Nav className="ml-auto" navbar>
                                     <NavItem>
                                         <NavLink href="/">Home</NavLink>

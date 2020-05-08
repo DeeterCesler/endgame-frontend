@@ -218,7 +218,10 @@ class HomePage extends Component {
                     }
                 </div>
                 : 
-                <Redirect to="/login"/>
+                <div>
+                    {this.props.isRegistered && <Redirect to="/plans"/> }
+                    {!this.props.isRegistered && <Redirect to="/register"/>}
+                </div>
                 }
             </div>
         )

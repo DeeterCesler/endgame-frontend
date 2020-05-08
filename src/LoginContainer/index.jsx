@@ -7,10 +7,10 @@ const LoginContainer = (props) => {
     return(
         <div>
             <div className="container">
-                {props.loggedIn ? <Redirect to="/"/>: <div/> }
+                {props.loggedIn ? <Redirect to="/"/>: null }
+                {props.isRegistered ? <Redirect to="/plans"/>: null }
                 <div className="mini-spacer"/>
                 <div className="mini-spacer"/>
-                {console.log('handle inputs: ' + props.handleInputs)}
                 <AboutPage/>
                 <br/>
                 <br/>

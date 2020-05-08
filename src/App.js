@@ -6,12 +6,19 @@ import AboutPage from './AboutPage';
 import NavBar from './NavBar';
 import LoginContainer from './LoginContainer';
 import RegisterContainer from './RegisterContainer';
+import PlanChoiceContainer from './PlanChoiceContainer';
+import SuccessPage from './SuccessPage';
 import LogoutPage from './LogoutPage';
 import ResetPasswordAttempt from './ResetPasswordAttempt';
 import ResetPassword from './ResetPassword';
 import HelpPage from './HelpPage';
 import AccountPage from './AccountPage';
 import OwnerPage from './OwnerPage';
+import { loadStripe } from '@stripe/stripe-js';
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe('pk_test_PCu6mNAX2Cdwq7gSDuKSOt7o00up9iciRr');
+
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
 
@@ -32,6 +39,8 @@ class App extends Component {
       planType: null,
       password: null,
       passwordCopy: null,
+      isRegistered: null,
+      sessionId: null,
     }
   }
 
@@ -52,16 +61,21 @@ class App extends Component {
           } 
         });
         const parsedResponse = await getUser.json();
+        console.log('parsed: ' + JSON.stringify(parsedResponse));
         if(parsedResponse.status === 200){
-          this.setState({
+          await this.setState({
             ...this.state,
-            loggedIn: true,
+            loggedIn: parsedResponse.loggedIn,
+            isRegistered: parsedResponse.isRegistered,
             email: parsedResponse.email,
             id: parsedResponse.id,
             name: parsedResponse.name,
             owner: parsedResponse.owner,
             isLoaded: true,
+            planType: parsedResponse.planType,
+            signupDate: parsedResponse.signupDate,
           })
+          console.log('plan type: ' + this.state.planType)
           if(localStorage.getItem("loggedIn") !== "true"){
             localStorage.setItem("loggedIn", true);
           }
@@ -94,6 +108,7 @@ class App extends Component {
 
   componentDidMount(){
     this.checkForCookie();
+    console.log('TEST. STATE: ' + JSON.stringify(this.state))
   }
 
   handleInputs = (e) => {
@@ -111,6 +126,43 @@ class App extends Component {
     })
   };
 
+  fetchCheckoutSession = async () => {
+    try {
+      const targetUrl = backendURL + 'auth/checkout'
+      const shite = await fetch(targetUrl, {
+        method: 'POST',
+        body: JSON.stringify(this.state),
+        headers: {
+          'Access-Control-Allow-Origin': targetUrl,
+          'Content-Type': 'application/json',
+          'credentials': 'same-origin',
+        }
+      });
+      const parsed = shite.json();
+      return parsed;
+    } catch(err){
+      console.log('err: ' + err);
+    }
+  }
+
+  submitBuyPlan = async (e) => {
+    e.preventDefault();
+    try {
+      const that = await this.fetchCheckoutSession();
+      const sessionId = that.sessionId;
+      const stripe = await stripePromise;
+      const { error } = await stripe.redirectToCheckout({
+        sessionId,
+      });
+      if(error) {
+        alert('error?? ' + error);
+        throw new Error(error);
+      }
+    } catch (err) {
+      console.log('err! ' + err)
+    }
+  }
+
   submitRegistration = async (e) => {
     e.preventDefault();
     try{
@@ -122,14 +174,14 @@ class App extends Component {
           'Access-Control-Allow-Origin': targetUrl,
           'Content-Type': 'application/json',
           'credentials': 'same-origin',
-        } 
+        },
       });
       const parsedResponse = await createUser.json();
       if(parsedResponse.status === 200){
         this.setState({
-          loggedIn: true,
+          isRegistered: true,
           email: parsedResponse.data.email,
-          id: parsedResponse.data._id
+          id: parsedResponse.data._id,
         })
         localStorage.setItem("token", parsedResponse.token);
         localStorage.setItem("email", parsedResponse.data.email);
@@ -163,12 +215,12 @@ class App extends Component {
           'credentials': 'same-origin',
         } 
       });
-      parsedLogged = await loggedUser.json();
+      const parsedLogged = await loggedUser.json();
       if (parsedLogged.status === 200) {
         this.setState({
-          loggedIn: true,
+          isRegistered: true,
           email: parsedLogged.data.email,
-          id: parsedLogged.data._id
+          id: parsedLogged.data._id,
         });
         console.log(parsedLogged)
         localStorage.setItem("token", parsedLogged.token);
@@ -293,7 +345,7 @@ class App extends Component {
   }
 
   homepage = () => {
-    return <HomePage loggedIn={this.state.loggedIn} id={this.state.id} />
+    return <HomePage isRegistered={this.state.isRegistered} loggedIn={this.state.loggedIn} id={this.state.id} />
   }
   
   aboutPage = () => {
@@ -301,11 +353,19 @@ class App extends Component {
   }
 
   loginPage = () => {
-    return <LoginContainer loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleInputs={this.handleInputs} submitRegistration={this.submitRegistration} message={this.state.message} />
+    return <LoginContainer isRegistered={this.state.isRegistered} loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleInputs={this.handleInputs} message={this.state.message} />
   }
 
   registerPage = () => {
-    return <RegisterContainer loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleInputs={this.handleInputs} handleCheck={this.handleCheck} submitRegistration={this.submitRegistration} message={this.state.message} planType={this.state.planType} password={this.state.password} passwordCopy={this.state.passwordCopy} />
+    return <RegisterContainer isRegistered={this.state.isRegistered} loggedIn={this.state.loggedIn} handleInputs={this.handleInputs} handleCheck={this.handleCheck} submitRegistration={this.submitRegistration} message={this.state.message} planType={this.state.planType} password={this.state.password} passwordCopy={this.state.passwordCopy} />
+  }
+
+  planChoicePage = () => {
+    return <PlanChoiceContainer submitBuyPlan={this.submitBuyPlan} loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleInputs={this.handleInputs} handleCheck={this.handleCheck} submitRegistration={this.submitRegistration} message={this.state.message} planType={this.state.planType} password={this.state.password} passwordCopy={this.state.passwordCopy} />
+  }
+
+  successPage = (props) => {
+    return <SuccessPage {...props} confirmSessionId={this.confirmSessionId} loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleInputs={this.handleInputs} handleCheck={this.handleCheck} submitRegistration={this.submitRegistration} message={this.state.message} planType={this.state.planType} password={this.state.password} passwordCopy={this.state.passwordCopy} />
   }
   
   logoutPage = () => {
@@ -335,7 +395,7 @@ class App extends Component {
   render(){
     return (
         <div className="App">
-          <NavBar loggedIn={this.state.loggedIn} owner={this.state.owner} />
+          <NavBar isRegistered={this.state.isRegistered} loggedIn={this.state.loggedIn} owner={this.state.owner} />
           <Switch>
             <Route exact path="/" render={this.homepage}/>
             <Route exact path="/about" render={this.aboutPage}/>
@@ -344,6 +404,8 @@ class App extends Component {
             <Route exact path="/reset" render={this.resetPasswordAttempt}/>
             <Route exact path="/reset/confirm/:id" render={(props) => this.resetPassword(props)}/>
             <Route exact path="/register" render={this.registerPage}/>
+            <Route exact path="/plans" render={this.planChoicePage}/>
+            <Route exact path="/success/:sessionId" render={this.successPage}/>
             <Route exact path="/routes/new" render={this.routesNew}/>
             <Route exact path="/routes/all" render={this.routesAll}/>
             <Route exact path="/help" render={this.helpPage}/>

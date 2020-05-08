@@ -235,3 +235,22 @@ body {
   border-radius: 10px;
   min-height: 100px;
 }
+
+.gray {
+  background-color: #cecece;
+  border-radius: 15px;
+  padding: 2em;
+}
+
+.step {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 1em;
+  margin: 1em;
+}
+
+.success {
+  color: #4b4b4b;
+  border-radius: 15px;
+  padding: 1em;
+}
