@@ -33,8 +33,7 @@ class HomePage extends Component {
           [e.currentTarget.name]: e.currentTarget.value,
           message: null,
           endpointsGot: false,
-        })
-        console.log(this.state.endpointValue)
+        });
     }
 
     deleteEndpoint = async (e, endpoint) => {
@@ -189,7 +188,7 @@ class HomePage extends Component {
                         this.state.response != null ?
                         <div>
                             <p>Endpoint successfully submitted.</p>
-                            <p>Your new endpoint can be hit at <br/><code>{backendURL}{this.props.id}/{this.state.endpointName}/</code></p>
+                            <p>Your new endpoint can be hit at <br/><code>{backendURL}{this.props.id}/{this.state.endpointName}</code></p>
                         </div>
                         : <div/>
                     }

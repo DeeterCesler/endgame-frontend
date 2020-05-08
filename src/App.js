@@ -14,6 +14,7 @@ import ResetPassword from './ResetPassword';
 import HelpPage from './HelpPage';
 import AccountPage from './AccountPage';
 import OwnerPage from './OwnerPage';
+import NoMatchPage from './NoMatchPage';
 import { loadStripe } from '@stripe/stripe-js';
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -392,6 +393,10 @@ class App extends Component {
     return <OwnerPage email={this.state.email} name={this.state.name} owner={this.state.owner} isLoaded={this.state.isLoaded} getNumberofUsers={this.getNumberofUsers} numUsersGot={this.state.numUsersGot} users={this.state.users} password={this.state.password} passwordCopy={this.state.passwordCopy} />
   }
 
+  NoMatch = () => {
+    return <NoMatchPage />
+  }
+
   render(){
     return (
         <div className="App">
@@ -411,6 +416,7 @@ class App extends Component {
             <Route exact path="/help" render={this.helpPage}/>
             <Route exact path="/account" render={this.accountPage}/>
             <Route exact path="/owner" render={this.ownerPage}/>
+            <Route render={this.NoMatch} />
           </Switch>
         </div>
     );
