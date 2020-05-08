@@ -1,10 +1,6 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
 
-const NoMatchPage = (props) => {
-    console.log('lol= ' + JSON.stringify(props))
-    const thisYear = new Date().getFullYear();
-    const thisMonth = new Date().getMonth();
+const NoMatchPage = () => {
     return(
         <div>
             <div className="spacer"/>

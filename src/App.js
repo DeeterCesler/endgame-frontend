@@ -16,7 +16,6 @@ import AccountPage from './AccountPage';
 import OwnerPage from './OwnerPage';
 import NoMatchPage from './NoMatchPage';
 import { loadStripe } from '@stripe/stripe-js';
-// Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe('pk_test_PCu6mNAX2Cdwq7gSDuKSOt7o00up9iciRr');
 
@@ -46,7 +45,7 @@ class App extends Component {
   }
 
 
-  checkForCookie = async () => {
+  checkForToken = async () => {
     if(localStorage.getItem("token") !== "null"){
       try{
         const targetUrl = backendURL + "auth/verify";
@@ -108,8 +107,7 @@ class App extends Component {
 
 
   componentDidMount(){
-    this.checkForCookie();
-    console.log('TEST. STATE: ' + JSON.stringify(this.state))
+    this.checkForToken();
   }
 
   handleInputs = (e) => {
@@ -149,8 +147,8 @@ class App extends Component {
   submitBuyPlan = async (e) => {
     e.preventDefault();
     try {
-      const that = await this.fetchCheckoutSession();
-      const sessionId = that.sessionId;
+      const session = await this.fetchCheckoutSession();
+      const sessionId = session.sessionId;
       const stripe = await stripePromise;
       const { error } = await stripe.redirectToCheckout({
         sessionId,
@@ -203,7 +201,6 @@ class App extends Component {
 
   submitLogin = async (e) => {
     e.preventDefault();
-    let parsedLogged;
     try{
       console.log("submitting login");
       const targetUrl = backendURL  + 'auth/login';
@@ -238,14 +235,10 @@ class App extends Component {
       else if (parsedLogged.status === 500) {
         console.log("INTERNAL SERVER ERROR")
       } else {
-        console.log("parsed log and shiiiiit:", parsedLogged);
-        alert("LOGIN FAILED")
+        alert("LOGIN FAILED. Response: " + JSON.stringify(parsedLogged));
       }
     }catch(err){
-      // console.log("parsed: ", parsedLogged);
-      console.log(parsedLogged);
-      console.log("Error, boi: ", err)
-      alert("LOGIN FAILED WITH ERROR: " + err)
+      alert("LOGIN FAILED WITH ERROR: " + err);
     }
   }
 
@@ -266,7 +259,7 @@ class App extends Component {
     e.preventDefault();
     let parsedLogged;
     try{
-      console.log("submitting reset (maybe)");
+      console.log("Submitting reset.");
       const targetUrl = backendURL  + 'auth/reset';
       const loggedUser = await fetch(targetUrl, {
         method: 'POST',
@@ -285,11 +278,9 @@ class App extends Component {
       else if (parsedLogged.status === 500){
         console.log("INTERNAL SERVER ERROR")
       } else {
-        console.log("parsed log and shiiiiit:", parsedLogged);
-        alert("LOGIN FAILED")
+        alert("LOGIN FAILED. RESPONSE: ", JSON.stringify(parsedLogged));
       }
     }catch(err){
-      // console.log("parsed: ", parsedLogged);
       console.log(parsedLogged);
     }
   }
@@ -299,7 +290,7 @@ class App extends Component {
     try{
       console.log("resetting password fr");
       const targetUrl = backendURL  + 'auth/reset/confirm';
-      const newPass = await fetch(targetUrl, {
+      await fetch(targetUrl, {
         method: 'POST',
         body: JSON.stringify({
           id: window.location.pathname.slice(15),

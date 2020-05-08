@@ -1,20 +1,16 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
-import { Button } from "reactstrap";
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
 
 
 class SuccessPage extends React.Component {
-    constructor(props){
-        super(props);
-    }
 
     propCheck = async () => {
         if (this.props.match.params.sessionId.length > 10) {
             try {
                 const targetUrl = backendURL + 'auth/success/confirm';
-                const response = await fetch(targetUrl, {
+                await fetch(targetUrl, {
                     method: 'POST',
                     body: JSON.stringify({sessionId: this.props.match.params.sessionId}),
                     headers: {
@@ -23,10 +19,6 @@ class SuccessPage extends React.Component {
                       'credentials': 'same-origin',
                     }
                 });
-                const parsed = await response.json();
-                console.log('IT COMING');
-                console.log(parsed);
-                alert(parsed.data);
             } catch (err) {
                 console.log(err)
             }
