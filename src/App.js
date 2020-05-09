@@ -61,7 +61,6 @@ class App extends Component {
           } 
         });
         const parsedResponse = await getUser.json();
-        console.log('parsed: ' + JSON.stringify(parsedResponse));
         if(parsedResponse.status === 200){
           await this.setState({
             ...this.state,
