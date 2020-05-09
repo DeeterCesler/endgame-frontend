@@ -16,7 +16,7 @@ const PlanChoiceContainer = (props) => {
             <div className="mini-spacer"/>
             <div className="row">
                 <div className="col-md">
-                    <div className={`planA plan ${props.planType === "planA" ? `show` : null}`} onClick={props.handleCheck} id="planA">
+                    <div className={`planA plan ${props.planType === "loneWolf" ? `show` : null}`} onClick={props.handleCheck} id="loneWolf">
                         <div className="product-header">Lone wolf developer</div>
                         <br/>
                         <ul className="deets text-left">
@@ -27,7 +27,7 @@ const PlanChoiceContainer = (props) => {
                     </div>
                 </div>
                 <div className="col-md">
-                    <div className={`planB plan ${props.planType === "planB" ? `show` : null}`} onClick={props.handleCheck} id="planB">
+                    <div className={`planB plan ${props.planType === "startup" ? `show` : null}`} onClick={props.handleCheck} id="startup">
                         <div className="product-header">Startup</div>
                         <div>
                             <br/>
@@ -40,7 +40,7 @@ const PlanChoiceContainer = (props) => {
                     </div>
                 </div>
                 <div className="col-md">
-                    <div className={`planC plan ${props.planType === "planC" ? `show` : null}`} onClick={props.handleCheck} id="planC">
+                    <div className={`planC plan ${props.planType === "enterprise" ? `show` : null}`} onClick={props.handleCheck} id="enterprise">
                         <div className="product-header">Enterprise</div>
                         <div>
                             <ul className="deets text-left">
