@@ -41,6 +41,7 @@ class App extends Component {
       passwordCopy: null,
       isRegistered: null,
       sessionId: null,
+      send: false,
     }
   }
 
@@ -264,15 +265,18 @@ class App extends Component {
         method: 'POST',
         body: JSON.stringify(this.state),
         headers: {
-          'Access-Control-Allow-Origin': targetUrl,
+          // 'Access-Control-Allow-Origin': targetUrl,
           'Content-Type': 'application/json',
           'credentials': 'same-origin',
+          'Access-Control-Allow-Origin': '*',
         } 
       });
       parsedLogged = await loggedUser.json();
-      // res => setToken(res.token);
       if(parsedLogged.status === 200){
-        console.log(parsedLogged)
+        this.setState({
+          ...this.state,
+          send: true,
+        });
       } 
       else if (parsedLogged.status === 500){
         console.log("INTERNAL SERVER ERROR")
@@ -364,7 +368,7 @@ class App extends Component {
   }
 
   resetPasswordAttempt = () => {
-    return <ResetPasswordAttempt submitReset={this.submitReset} handleInputs={this.handleInputs} />
+    return <ResetPasswordAttempt send={this.state.send} submitReset={this.submitReset} handleInputs={this.handleInputs} />
   }
 
   resetPassword = (props) => {
