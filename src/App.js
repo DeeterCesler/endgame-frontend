@@ -290,10 +290,11 @@ class App extends Component {
 
   setNewPassword = async (e) => {
     e.preventDefault();
+    console.log('slice: ' + window.location.pathname.slice(15))
     try{
       console.log("resetting password fr");
       const targetUrl = backendURL  + 'auth/reset/confirm';
-      await fetch(targetUrl, {
+      const response = await fetch(targetUrl, {
         method: 'POST',
         body: JSON.stringify({
           id: window.location.pathname.slice(15),
@@ -305,6 +306,14 @@ class App extends Component {
           'credentials': 'same-origin',
         } 
       });
+      const parsedResponse = await response.json();
+      console.log('parsed bou: ' + parsedResponse)
+      if(parsedResponse.status === 200){
+        this.setState({
+          ...this.state,
+          send: true,
+        });
+      } 
     } catch (err) {
       console.log('ERR: ' + err)
     }
@@ -372,7 +381,7 @@ class App extends Component {
   }
 
   resetPassword = (props) => {
-    return <ResetPassword {...props} setNewPassword={this.setNewPassword} handleInputs={this.handleInputs} />
+    return <ResetPassword {...props} setNewPassword={this.setNewPassword} handleInputs={this.handleInputs} password={this.state.password} passwordCopy={this.state.passwordCopy} send={this.state.send} />
   }
   
   helpPage = () => {
