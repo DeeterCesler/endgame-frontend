@@ -56,11 +56,21 @@ const PlanChoiceContainer = (props) => {
             
             <br/>
             {
-                props.planType
+                props.planType 
                 &&
-                <form onSubmit={props.submitBuyPlan}>
-                    <Button type="submit">Submit</Button>
-                </form>
+                <div>
+                    {
+                        props.isRegistered
+                        ?
+                        <form onSubmit={props.submitBuyPlan}>
+                            <Button type="submit">Submit</Button>
+                        </form>
+                        :
+                        <div>
+                            <a href="/register"><Button>Register an account</Button></a>
+                        </div>
+                    }
+                </div>
             }
             {/* When SaaS-ready, replace "Registration" with a buy/sign-up page */}
             <div className="spacer"/>

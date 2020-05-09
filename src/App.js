@@ -352,7 +352,7 @@ class App extends Component {
   }
 
   planChoicePage = () => {
-    return <PlanChoiceContainer submitBuyPlan={this.submitBuyPlan} loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleInputs={this.handleInputs} handleCheck={this.handleCheck} submitRegistration={this.submitRegistration} message={this.state.message} planType={this.state.planType} password={this.state.password} passwordCopy={this.state.passwordCopy} />
+    return <PlanChoiceContainer isRegistered={this.state.isRegistered} handleCheck={this.handleCheck} submitBuyPlan={this.submitBuyPlan} loggedIn={this.state.loggedIn} submitLogin={this.submitLogin} handleInputs={this.handleInputs} planType={this.state.planType} />
   }
 
   successPage = (props) => {
