@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import { Alert } from "reactstrap";
 import { Redirect } from "react-router-dom";
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
@@ -12,7 +13,7 @@ const defaultText = `{
     }
 }`
 
-class HomePage extends Component {
+class NewEndpointPage extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -32,27 +33,6 @@ class HomePage extends Component {
           message: null,
           endpointsGot: false,
         });
-    }
-
-    deleteEndpoint = async (e, endpoint) => {
-        e.preventDefault();
-        try{
-            console.log("DELETING ENDPOINT")
-            await fetch(backendURL + endpoint._id, {
-                method: "DELETE",
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json',
-                    "authorization": localStorage.getItem("token")
-                }
-            })
-            this.setState({
-                ...this.state,
-                endpointsGot: false,
-            })
-        } catch(error){
-            console.log(error);
-        }
     }
 
     clearSlashPrefix = async () => {
@@ -133,50 +113,59 @@ class HomePage extends Component {
         }
     }
 
-    getAllEndpoints = async (e) => {
-        e.preventDefault();
-        try{
-            console.log("GETTING ENDPOINTS")
-            const submittedEndpoint = await fetch(backendURL + "all", {
-                method: "GET",
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json',
-                    "authorization": localStorage.getItem("token")
-                    // 'Access-Control-Allow-Headers': "POST",
-                    // 'credentials': 'same-origin',
-                }
-            })
-            const parsedResponse = await submittedEndpoint.json();
-            this.setState({
-                allEndpoints: parsedResponse.data,
-                endpointsGot: true
-            })
-        } catch(error){
-            console.log(error);
-        }
-    }
-
     render(){
         return (
             <div>
-                { this.props.isLoaded 
-                    &&
+                {
+                    !this.props.isLoaded ?
+                    null
+                    :
                     <div>
-                    {this.props.loggedIn ?
-                        <div>
-                            <div className="spacer" />
-                            <h1>home!</h1>
-                            <div className="mini-spacer" />
-                            <div><a href="/routes/new">Create an endpoint</a></div>
-                            <div><a href="/routes">View your endpoints</a></div>
-                        </div>
-                    : 
-                        <div>
-                            {this.props.isRegistered && <Redirect to="/plans"/> }
-                            {!this.props.isRegistered && <Redirect to="/register"/>}
-                        </div>
-                    }
+                        { this.props.loggedIn
+                            ?
+                            <div>
+                            {console.log('loggedin new end- ' + JSON.stringify(this.props.loggedIn))}
+                                <br/>
+                                <br/>
+                                <h1>create an endpoint</h1>
+                                <form onSubmit={this.submitEndpoint}>
+                                    <br/>
+                                    <br/>
+                                    <h6>Choose the name of the endpoint (this is what's actually in the URL)</h6>
+                                    <input onChange={this.handleInputs} className="input" name="endpointName" type="text" placeholder='endpoint name, e.g. "/endpoint" or even "/v1/nested/endpoints"'/>
+                                    <br/>
+                                    <br/>
+                                    <h6>Input whatever sample data you want (in JSON!)</h6>
+                                    <code className="language-javascript"><textarea onChange={this.handleInputs} className="input json" name="endpointValue" type="textarea" placeholder="The response you want back (in JSON)" defaultValue={defaultText} maxLength="2000"/></code>
+                                    <br/>
+                                    <button className="input" type="submit">Submit</button>
+                                </form>
+                                <br/>
+                                <div className="container">
+                                    { this.state.message ? <Alert color="danger">{this.state.message}</Alert> : <div/> }
+                                </div>
+                                <br/>
+                                {
+                                    this.state.response != null ?
+                                    <div>
+                                        <p>Endpoint successfully submitted.</p>
+                                        <p>Your new endpoint can be hit at <br/><code>{backendURL}{this.state.id}/{this.state.endpointName}</code></p>
+                                    </div>
+                                    : <div/>
+                                }
+                                <h3>Your unique ID is <strong>{this.props.id}</strong></h3> 
+                                <p>To use this, copy down your unique ID number. <br/> When you make an endpoint above, you can access your endpoint by using your id in the URL.</p>
+                                <p>E.g., when you hit <br/><code>{backendURL}{this.props.id}/EndpointName</code><br/> then the JSON response will be the value you put in above.</p>
+                                <br/>
+                                <br/>
+                                <br/>
+                            </div>
+                            :
+                            <div>
+                                {this.props.isRegistered && <Redirect to="/plans"/> }
+                                {!this.props.isRegistered && <Redirect to="/register"/>}
+                            </div>
+                        }
                     </div>
                 }
             </div>
@@ -184,4 +173,4 @@ class HomePage extends Component {
     }
 }
 
-export default HomePage;
+export default NewEndpointPage;

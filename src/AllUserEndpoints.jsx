@@ -2,18 +2,8 @@ import React, {Component} from "react";
 import { Redirect } from "react-router-dom";
 import { Alert } from "reactstrap";
 import FoundEndpoint from "./FoundEndpoint";
-import NewEndpoint from "./NewEndpoint";
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
-
-const defaultText = `{
-    "yourKeyHere": "yourValueHere",
-    "wantABoolean": true,
-    "valueNumber": 3,
-    "nestedObject": {
-        "sampleKey":"sampleValue"
-    }
-}`
 
 class AllUserEndpoints extends Component {
     constructor(props){
@@ -73,24 +63,43 @@ class AllUserEndpoints extends Component {
     render(){
         return (
             <div>
-                {this.props.endpointsGot 
-                    ? 
-                    <div>
-                        <h4>Found endpoints</h4>
-                        {this.props.allEndpoints.map(endpoint => <FoundEndpoint layerOne={endpoint.layerOne} key={endpoint._id} userId={this.props.id} routeId={endpoint._id} route={Object.keys(endpoint.layerOne)[0]} deleteEndpoint={(e) => {this.props.deleteEndpoint(e, endpoint)}} />)}
-                    </div>
+                {
+                    !this.props.isLoaded ?
+                    null
                     :
                     <div>
-                        <h3>Show all your endpoints</h3>
-                        <form onSubmit={this.props.getAllEndpoints}>
-                            <button type="submit">Reveal</button>
-                        </form>
-                        <br/>
-                        <br/>
-                        <br/>
+                        {this.props.loggedIn ?
+                        <div>
+                            {this.state.endpointsGot 
+                                ? 
+                                <div>
+                                    {console.log('help1')}
+                                    <h4>Found endpoints</h4>
+                                    {this.state.allEndpoints.map(endpoint => <FoundEndpoint layerOne={endpoint.layerOne} key={endpoint._id} userId={this.props.id} routeId={endpoint._id} route={Object.keys(endpoint.layerOne)[0]} deleteEndpoint={(e) => {this.deleteEndpoint(e, endpoint)}} />)}
+                                </div>
+                                :
+                                <div>
+                                {console.log('help2')}
+                                    <h3>Show all your endpoints</h3>
+                                    <form onSubmit={this.getAllEndpoints}>
+                                        <button type="submit">Reveal</button>
+                                    </form>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                </div>
+                            }
+                        </div>
+                        : 
+                        <div>
+                            {console.log('help3')}
+                            {this.props.isRegistered && <Redirect to="/plans"/> }
+                            {!this.props.isRegistered && <Redirect to="/register"/>}
+                        </div>
+                        }
                     </div>
                 }
-            </div>
+                </div>
         )
     }
 }

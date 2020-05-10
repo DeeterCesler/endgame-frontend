@@ -16,6 +16,8 @@ import AccountPage from './AccountPage';
 import OwnerPage from './OwnerPage';
 import NoMatchPage from './NoMatchPage';
 import { loadStripe } from '@stripe/stripe-js';
+import NewEndpointPage from './NewEndpointPage';
+import AllUserEndpoints from './AllUserEndpoints';
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
@@ -102,7 +104,7 @@ class App extends Component {
   }
 
 
-  componentDidMount(){
+  componentDidMount = () => {
     this.checkForToken();
   }
 
@@ -342,7 +344,15 @@ class App extends Component {
   }
 
   homepage = () => {
-    return <HomePage isRegistered={this.state.isRegistered} loggedIn={this.state.loggedIn} id={this.state.id} />
+    return <HomePage isRegistered={this.state.isRegistered} loggedIn={this.state.loggedIn} id={this.state.id} isLoaded={this.state.isLoaded} />
+  }
+
+  newEndpointPage = () => {
+    return <NewEndpointPage isRegistered={this.state.isRegistered} loggedIn={this.state.loggedIn} id={this.state.id} isLoaded={this.state.isLoaded}/>
+  }
+
+  allEndpointsPage = () => {
+    return <AllUserEndpoints isRegistered={this.state.isRegistered} loggedIn={this.state.loggedIn} id={this.state.id} isLoaded={this.state.isLoaded}/>
   }
   
   aboutPage = () => {
@@ -407,8 +417,8 @@ class App extends Component {
             <Route exact path="/register" render={this.registerPage}/>
             <Route exact path="/plans" render={this.planChoicePage}/>
             <Route exact path="/success/:sessionId" render={this.successPage}/>
-            <Route exact path="/routes/new" render={this.routesNew}/>
-            <Route exact path="/routes/all" render={this.routesAll}/>
+            <Route exact path="/routes/new" render={this.newEndpointPage}/>
+            <Route exact path="/routes" render={this.allEndpointsPage}/>
             <Route exact path="/help" render={this.helpPage}/>
             <Route exact path="/account" render={this.accountPage}/>
             <Route exact path="/owner" render={this.ownerPage}/>

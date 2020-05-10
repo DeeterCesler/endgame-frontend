@@ -24,17 +24,23 @@ export default class NavBar extends Component{
                     <Collapse isOpen={this.state.isOpen} navbar>
                         { this.props.isRegistered ? 
                             <Nav className="ml-auto" navbar>
-                                    <NavItem>
+                                    {/* <NavItem>
                                         <NavLink href="/">Home</NavLink>
+                                    </NavItem> */}
+                                    <NavItem>
+                                        <NavLink href="/routes/new">Create route</NavLink>
                                     </NavItem>
                                     <NavItem>
-                                        <NavLink href="/logout">Logout</NavLink>
+                                        <NavLink href="/routes">See routes</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink href="/account">Account</NavLink>
                                     </NavItem>
                                     <NavItem>
                                         <NavLink href="/help">Help</NavLink>
                                     </NavItem>
                                     <NavItem>
-                                        <NavLink href="/account">Account</NavLink>
+                                        <NavLink href="/logout">Logout</NavLink>
                                     </NavItem>
                                     { this.props.owner ?
                                         <NavItem>
