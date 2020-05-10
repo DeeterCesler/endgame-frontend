@@ -19,6 +19,9 @@ class SuccessPage extends React.Component {
                       'credentials': 'same-origin',
                     }
                 });
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 500);
             } catch (err) {
                 console.log(err)
             }
@@ -45,8 +48,6 @@ class SuccessPage extends React.Component {
                     Logging you in now...</p>
                     <br/>
                 </div>
-                {/* <p>{props.match.params.sessionId}</p> */}
-                <br/>
                 <div className="spacer"/>
             </div>
         )
