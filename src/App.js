@@ -50,7 +50,6 @@ class App extends Component {
         const targetUrl = backendURL + "auth/verify";
         const getUser = await fetch(targetUrl, {
           method: 'POST',
-          // body: localStorage.token,
           headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
@@ -92,7 +91,6 @@ class App extends Component {
         console.log("failed to get cookie", err);
         localStorage.setItem("loggedIn", false);
         localStorage.setItem("email", null);
-        // localStorage.setItem("token", null);
         this.setState({
           loggedIn: false
         })
@@ -288,7 +286,6 @@ class App extends Component {
 
   setNewPassword = async (e) => {
     e.preventDefault();
-    console.log('slice: ' + window.location.pathname.slice(15))
     try{
       console.log("resetting password fr");
       const targetUrl = backendURL  + 'auth/reset/confirm';
@@ -305,7 +302,6 @@ class App extends Component {
         } 
       });
       const parsedResponse = await response.json();
-      console.log('parsed bou: ' + parsedResponse)
       if(parsedResponse.status === 200){
         this.setState({
           ...this.state,
@@ -320,7 +316,6 @@ class App extends Component {
   getNumberofUsers = async (e) => {
     e.preventDefault();
     try {
-      console.log('Getting total # of users.');
       const targetUrl = backendURL  + 'owner/getUsers';
       const users = await fetch(targetUrl, {
         method: 'GET',
