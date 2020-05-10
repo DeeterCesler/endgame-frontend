@@ -17,9 +17,7 @@ import OwnerPage from './OwnerPage';
 import NoMatchPage from './NoMatchPage';
 import { loadStripe } from '@stripe/stripe-js';
 // recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_PCu6mNAX2Cdwq7gSDuKSOt7o00up9iciRr');
-
-
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
 
 class App extends Component {
