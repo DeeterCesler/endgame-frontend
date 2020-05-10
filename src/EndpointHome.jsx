@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import { Redirect } from "react-router-dom";
-import { Alert } from "reactstrap";
 import FoundEndpoint from "./FoundEndpoint";
+import NewEndpoint from "./NewEndpoint";
+import AllUserEndpoints from "./AllUserEndpoints";
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
 
@@ -25,7 +26,7 @@ class HomePage extends Component {
             allEndpoints: []
         }
     }
-    
+
     handleInputs = (e) => {
         this.setState({
           ...this.state,
@@ -75,8 +76,16 @@ class HomePage extends Component {
         *  changing the value, it prevents an error from trying to parse something
         *  that's already parsed.
         */
-       let success;
-        if(typeof(this.state.endpointValue) === "string"){
+        let success;
+        if (!this.state.endpointName.length) {
+            console.log('NONE')
+            console.log(this.state.endpointName.length)
+            this.setState({
+                ...this.state,
+                message: "No endpoint name submitted. Add a name for the URL you want to create and try again.",
+            })
+            success = false;
+        } else if(typeof(this.state.endpointValue) === "string"){
             try {
                 this.state.endpointValue = JSON.parse(this.state.endpointValue); // this is to prevent from getting double Stringified later on
                 success = true;
@@ -90,14 +99,6 @@ class HomePage extends Component {
                     message: "It looks like that wasn't JSON. Please look it over and try again.",
                 })
             }
-        }
-        
-        if (!this.state.endpointName.length) {
-            this.setState({
-                ...this.state,
-                message: "No endpoint name submitted. Add a name for the URL you want to create and try again.",
-            })
-            success = false;
         }
         
 
@@ -164,57 +165,8 @@ class HomePage extends Component {
             <div>
                 {this.props.loggedIn ?
                 <div>
-                    <br/>
-                    <br/>
-                    <h1>create an endpoint</h1>
-                    <form onSubmit={this.submitEndpoint}>
-                        <br/>
-                        <br/>
-                        <h6>Choose the name of the endpoint (this is what's actually in the URL)</h6>
-                        <input onChange={this.handleInputs} className="input" name="endpointName" type="text" placeholder='endpoint name, e.g. "/endpoint" or even "/v1/nested/endpoints"'/>
-                        <br/>
-                        <br/>
-                        <h6>Input whatever sample data you want (in JSON!)</h6>
-                        <code className="language-javascript"><textarea onChange={this.handleInputs} className="input json" name="endpointValue" type="textarea" placeholder="The response you want back (in JSON)" defaultValue={defaultText} maxLength="2000"/></code>
-                        <br/>
-                        <button className="input" type="submit">Submit</button>
-                    </form>
-                    <br/>
-                    <div className="container">
-                        { this.state.message ? <Alert color="danger">{this.state.message}</Alert> : <div/> }
-                    </div>
-                    <br/>
-                    {
-                        this.state.response != null ?
-                        <div>
-                            <p>Endpoint successfully submitted.</p>
-                            <p>Your new endpoint can be hit at <br/><code>{backendURL}{this.props.id}/{this.state.endpointName}</code></p>
-                        </div>
-                        : <div/>
-                    }
-                    <h3>Your unique ID is <strong>{this.props.id}</strong></h3> 
-                    <p>To use this, copy down your unique ID number. <br/> When you make an endpoint above, you can access your endpoint by using your id in the URL.</p>
-                    <p>E.g., when you hit <br/><code>{backendURL}{this.props.id}/EndpointName</code><br/> then the JSON response will be the value you put in above.</p>
-                    <br/>
-                    <br/>
-                    <br/>
-                    {this.state.endpointsGot 
-                        ? 
-                        <div>
-                            <h4>Found endpoints</h4>
-                            {this.state.allEndpoints.map(endpoint => <FoundEndpoint layerOne={endpoint.layerOne} key={endpoint._id} userId={this.props.id} routeId={endpoint._id} route={Object.keys(endpoint.layerOne)[0]} deleteEndpoint={(e) => {this.deleteEndpoint(e, endpoint)}} />)}
-                        </div>
-                        :
-                        <div>
-                            <h3>Show all your endpoints</h3>
-                            <form onSubmit={this.getAllEndpoints}>
-                                <button type="submit">Reveal</button>
-                            </form>
-                            <br/>
-                            <br/>
-                            <br/>
-                        </div>
-                    }
+                    <NewEndpoint handleInputs={this.handleInputs} submitEndpoint={this.submitEndpoint} clearSlashPrefix={this.clearSlashPrefix} message={this.state.message} />
+                    <AllUserEndpoints endpointsGot={this.state.endpointsGot} allEndpoints={this.state.allEndpoints} deleteEndpoint={this.deleteEndpoint} getAllEndpoints={this.getAllEndpoints} />
                 </div>
                 : 
                 <div>
