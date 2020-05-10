@@ -10,6 +10,7 @@ const AccountPage = (props) => {
             <h5>Send me an email! I always want to hear what you love, hate, or just would love to see next.</h5>
             <p>your email: <strong>{props.email}</strong></p>
             <p>your name: <strong>{props.name}</strong></p>
+            <p>your account type: <strong>{props.planType}</strong></p>
             { props.owner ? <a href="/owner">Go to owner page</a> : <div/> }
             <br/>
         </div>

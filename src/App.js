@@ -71,7 +71,7 @@ class App extends Component {
             name: parsedResponse.name,
             owner: parsedResponse.owner,
             isLoaded: true,
-            planType: parsedResponse.planType,
+            planType: parsedResponse.planType.slice(6),
             signupDate: parsedResponse.signupDate,
           })
           console.log('plan type: ' + this.state.planType)
@@ -392,7 +392,7 @@ class App extends Component {
   }
 
   accountPage = () => {
-    return <AccountPage email={this.state.email} name={this.state.name} owner={this.state.owner} />
+    return <AccountPage email={this.state.email} name={this.state.name} owner={this.state.owner} planType={this.state.planType} />
   }
 
   ownerPage = () => {
