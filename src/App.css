@@ -222,7 +222,7 @@ body {
   margin-bottom: 5px;
 }
 
-.show {
+.selected {
   border: solid #866d00 4px !important;
   background-color: rgb(255, 254, 242);
   padding: calc(2em - 2px) !important;
