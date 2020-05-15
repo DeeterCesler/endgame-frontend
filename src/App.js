@@ -94,7 +94,9 @@ class App extends Component {
         localStorage.setItem("loggedIn", false);
         localStorage.setItem("email", null);
         this.setState({
-          loggedIn: false
+          loggedIn: false,
+          isRegistered: false,
+          isLoaded: true,
         })
       }
     } else{
