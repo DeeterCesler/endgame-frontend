@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import { Redirect } from "react-router-dom";
+import AllUserEndpoints from "./AllUserEndpoints";
 
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
 
@@ -165,11 +166,7 @@ class HomePage extends Component {
                     <div>
                     {this.props.loggedIn ?
                         <div>
-                            <div className="spacer" />
-                            <h1>home!</h1>
-                            <div className="mini-spacer" />
-                            <div><a href="/routes/new">Create an endpoint</a></div>
-                            <div><a href="/routes">View your endpoints</a></div>
+                            <AllUserEndpoints isRegistered={this.props.isRegistered} loggedIn={this.props.loggedIn} id={this.props.id} isLoaded={this.props.isLoaded}/>
                         </div>
                     : 
                         <div>

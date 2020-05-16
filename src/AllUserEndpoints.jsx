@@ -36,8 +36,7 @@ class AllUserEndpoints extends Component {
         }
     }
 
-    getAllEndpoints = async (e) => {
-        e.preventDefault();
+    getAllEndpoints = async () => {
         try{
             console.log("GETTING ENDPOINTS")
             const submittedEndpoint = await fetch(backendURL + "all", {
@@ -59,6 +58,10 @@ class AllUserEndpoints extends Component {
             console.log(error);
         }
     }
+    
+    componentDidMount() {
+        this.getAllEndpoints();
+    }
 
     render(){
         return (
@@ -70,23 +73,25 @@ class AllUserEndpoints extends Component {
                     <div>
                         {this.props.loggedIn ?
                         <div>
-                            {this.state.endpointsGot 
+                            {this.state.allEndpoints.length
                                 ? 
                                 <div>
-                                    {console.log('help1')}
-                                    <h4>Found endpoints</h4>
-                                    {this.state.allEndpoints.map(endpoint => <FoundEndpoint layerOne={endpoint.layerOne} key={endpoint._id} userId={this.props.id} routeId={endpoint._id} route={Object.keys(endpoint.layerOne)[0]} deleteEndpoint={(e) => {this.deleteEndpoint(e, endpoint)}} />)}
+                                    <div className="mini-spacer" />
+                                    <div className="light-gray container">
+                                        <h2><a href="/routes/new">Create an endpoint</a></h2>
+                                    </div>
+                                    <br/>
+                                    <div className="light-gray container">
+                                        <h2>Existing endpoints</h2>
+                                        {this.state.allEndpoints.map(endpoint => <FoundEndpoint layerOne={endpoint.layerOne} key={endpoint._id} userId={this.props.id} routeId={endpoint._id} route={Object.keys(endpoint.layerOne)[0]} deleteEndpoint={(e) => {this.deleteEndpoint(e, endpoint)}} />)}
+                                    </div>
+                                    <br/>
                                 </div>
                                 :
                                 <div>
-                                {console.log('help2')}
-                                    <h3>Show all your endpoints</h3>
-                                    <form onSubmit={this.getAllEndpoints}>
-                                        <button type="submit">Reveal</button>
-                                    </form>
-                                    <br/>
-                                    <br/>
-                                    <br/>
+                                    <div className="spacer" />
+                                    <p><strong>No endpoints yet.</strong></p>
+                                    <p><a href="/routes/new">Why not create one?</a></p>
                                 </div>
                             }
                         </div>

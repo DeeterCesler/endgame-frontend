@@ -149,7 +149,7 @@ class NewEndpointPage extends Component {
                                     this.state.response != null ?
                                     <div>
                                         <p>Endpoint successfully submitted.</p>
-                                        <p>Your new endpoint can be hit at <br/><code>{backendURL}{this.state.id}/{this.state.endpointName}</code></p>
+                                        <p>Your new endpoint can be hit at <br/><code>{backendURL}{this.props.id}/{this.state.endpointName}</code></p>
                                     </div>
                                     : <div/>
                                 }

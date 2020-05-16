@@ -86,7 +86,8 @@ class App extends Component {
         } else {
           this.setState({
             loggedIn: false,
-            email: ""
+            email: "",
+            isLoaded: true,
           })
         }
       } catch(err){
@@ -101,6 +102,11 @@ class App extends Component {
       }
     } else{
       console.log("else statement hit. JWT doesn't exist yet");
+      this.setState({
+        loggedIn: false,
+        isRegistered: false,
+        isLoaded: true,
+      })
     }
     return
   }
@@ -250,8 +256,10 @@ class App extends Component {
     localStorage.setItem("token", null)
     this.setState({
       loggedIn: false,
+      isRegistered: false,
       email: "",
-      password: ""
+      password: "",
+      isLoaded: true,
     })
   }
 
