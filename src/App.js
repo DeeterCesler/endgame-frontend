@@ -71,7 +71,7 @@ class App extends Component {
             name: parsedResponse.name,
             owner: parsedResponse.owner,
             isLoaded: true,
-            planType: parsedResponse.planType.slice(6),
+            planType: parsedResponse.planType,
             signupDate: parsedResponse.signupDate,
           })
           console.log('plan type: ' + this.state.planType)

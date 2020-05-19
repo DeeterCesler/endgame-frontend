@@ -5,6 +5,9 @@ const OwnerPage = (props) => {
     console.log('lol= ' + JSON.stringify(props))
     const thisYear = new Date().getFullYear();
     const thisMonth = new Date().getMonth();
+    const loneWolfMax = 1000;
+    const startupMax = 5000;
+    const enterpriseMax = 100000;
     return(
         <div>
             { props.isLoaded ? 
@@ -19,19 +22,35 @@ const OwnerPage = (props) => {
                             <p>Number of users: { props.users.length }</p>
                             <strong>
                                 <div className="row">
-                                    <span className="col-3">User's name</span>
-                                    <span className="col-3">User's email</span>
-                                    <span className="col-3">User's # of API endpoints</span>
-                                    <span className="col-3">User's # of calls this month</span>
+                                    <span className="col-3">Name</span>
+                                    <span className="col-3">Email</span>
+                                    <span className="col-2">Plan type</span>
+                                    <span className="col-2">User's # of API endpoints</span>
+                                    <span className="col-2">User's # of calls this month</span>
                                 </div>
                             </strong>
                             {props.users.map((user) => {
+                                const callsThisMonth = user.numberOfCalls.details !== undefined ? user.numberOfCalls.details[thisYear][thisMonth] : 0;
+                                let overage = false;
+                                if (user.planType === "loneWolf") {
+                                    if (callsThisMonth > loneWolfMax) {
+                                        overage = true;
+                                    }
+                                } else if (user.planType === "startup") {
+                                    if (callsThisMonth > startupMax) {
+                                        overage = true;
+                                    }
+                                } else if (user.planType === "enterprise") {
+                                    if (callsThisMonth > enterpriseMax) {
+                                        overage = true;
+                                    }
+                                }
                                 return (<div className="row">
                                     <span className="col-3">{user.name}</span>
                                     <span className="col-3">{user.email}</span>
-                                    <span className="col-3">{user.endpoints.length}</span>
-                                    <span className="col-3">{user.numberOfCalls.details !== undefined ? user.numberOfCalls.details[thisYear][thisMonth] : <span>0</span>}</span>
-                                    {/* <span className="col">{user.endpoints.length}</span> */}
+                                    <span className="col-2">{user.planType}</span>
+                                    <span className="col-2">{user.endpoints.length}</span>
+                                    <span className="col-2">{overage && <strong>OVER LIMIT: </strong>}{callsThisMonth}</span>
                                 </div>)
                             })}
                         </div>
