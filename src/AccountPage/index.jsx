@@ -11,20 +11,30 @@ const AccountPage = (props) => {
                 <div className="row text-left">
                     <div className="col-md" />
                     <div className="col-md light-gray">
-                        <p>
-                            your email: 
+                        <span>
+                            email
                             <br/> 
                             <strong>{props.email}</strong>
-                        </p>
-                        <p>
-                            your name: 
+                        </span>
+                        <br/> 
+                        <br/> 
+                        <span>
+                            name
                             <br/> 
                             <strong>{props.name}</strong>
-                        </p>
-                        <p>your account type: 
+                        </span>
+                        <br/> 
+                        <br/> 
+                        <span>
+                            account type
                             <br/> 
                             <strong>{props.planType}</strong>
-                        </p>
+                        </span>
+                        <br/> 
+                        <br/> 
+                        <span className="forgot">
+                            <a href="/reset">Reset password</a>
+                        </span>
                     </div>
                     <div className="col-md" />
                 </div>
