@@ -5,11 +5,11 @@ import { Redirect } from "react-router-dom";
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
 
 const defaultText = `{
-    "yourKeyHere": "yourValueHere",
-    "wantABoolean": true,
-    "valueNumber": 3,
-    "nestedObject": {
-        "sampleKey":"sampleValue"
+"yourKeyHere": "yourValueHere",
+"wantABoolean": true,
+"valueNumber": 3,
+"nestedObject": {
+    "sampleKey":"sampleValue"
     }
 }`
 
@@ -123,8 +123,7 @@ class NewEndpointPage extends Component {
                     <div>
                         { this.props.loggedIn
                             ?
-                            <div>
-                            {console.log('loggedin new end- ' + JSON.stringify(this.props.loggedIn))}
+                            <div className="container">
                                 <br/>
                                 <br/>
                                 <h1>create an endpoint</h1>
@@ -132,7 +131,7 @@ class NewEndpointPage extends Component {
                                     <br/>
                                     <br/>
                                     <h6>Choose the name of the endpoint (this is what's actually in the URL)</h6>
-                                    <input onChange={this.handleInputs} className="input" name="endpointName" type="text" placeholder='endpoint name, e.g. "/endpoint" or even "/v1/nested/endpoints"'/>
+                                    <input onChange={this.handleInputs} className="input" name="endpointName" type="text" placeholder='endpoint name, e.g. "/endpoint" or "/v1/nested/endpoints"'/>
                                     <br/>
                                     <br/>
                                     <h6>Input whatever sample data you want (in JSON!)</h6>
@@ -153,7 +152,7 @@ class NewEndpointPage extends Component {
                                     </div>
                                     : <div/>
                                 }
-                                <h3>Your unique ID is <strong>{this.props.id}</strong></h3> 
+                                <h4>Your unique ID is <strong>{this.props.id}</strong></h4> 
                                 <p>To use this, copy down your unique ID number. <br/> When you make an endpoint above, you can access your endpoint by using your id in the URL.</p>
                                 <p>E.g., when you hit <br/><code>{backendURL}{this.props.id}/EndpointName</code><br/> then the JSON response will be the value you put in above.</p>
                                 <br/>

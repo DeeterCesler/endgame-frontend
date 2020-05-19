@@ -72,7 +72,7 @@ class AllUserEndpoints extends Component {
                     :
                     <div>
                         {this.props.loggedIn ?
-                        <div>
+                        <div className="container">
                             {this.state.allEndpoints.length
                                 ? 
                                 <div>

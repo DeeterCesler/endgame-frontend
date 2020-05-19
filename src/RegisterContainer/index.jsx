@@ -19,15 +19,15 @@ const RegisterContainer = (props) => {
                 <br/>
                 <br/>
                 <div className="row">
-                    <div className="col step">
+                    <div className="col-md step">
                         <h5>1. Register your account</h5>
                         <p className="small">You can do that in the form below.</p>
                     </div>
-                    <div className="col step">
+                    <div className="col-md step">
                         <h5>2. Choose a plan</h5>
                         <p className="small">Three plans tailored to how often you'll use this service.</p>
                     </div>
-                    <div className="col step">
+                    <div className="col-md step">
                         <h5>3. Start using your simulated backend</h5>
                         <p className="small">Make an endpoint and <i>immediately</i> get working JSON.</p>
                     </div>

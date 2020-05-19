@@ -2,7 +2,7 @@ import React from "react";
 
 const AccountPage = (props) => {
     return(
-        <div>
+        <div className="container">
             <div className="mini-spacer"/>
             <div className="mini-spacer"/>
             <h1>Account</h1>

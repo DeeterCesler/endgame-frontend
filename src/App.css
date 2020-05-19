@@ -144,11 +144,6 @@ body {
   padding: 5px;
 }
 
-.input-item{
-  width: 48%;
-  margin: 1%;
-}
-
 @media only screen and (min-width: 1000px) {
   .large-view{
     visibility: visible;
@@ -195,8 +190,17 @@ body {
   color: #3f3f3f;
 }
 
-.input{
+.input {
+  padding: 1px;
   width: 80%;
+}
+
+.input-small{
+  background-color: #ffe8e8;
+}
+
+.input, .input-small{
+  border: solid 2px black;
 }
 
 .json{

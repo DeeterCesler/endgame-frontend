@@ -2,7 +2,7 @@ import React from "react";
 
 const HelpPage = () => {
     return(
-        <div>
+        <div className="container">
             <div className="mini-spacer"/>
             <div className="mini-spacer"/>
             <h1>Need help?</h1>
