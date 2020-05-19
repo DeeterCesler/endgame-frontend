@@ -7,12 +7,40 @@ const AccountPage = (props) => {
             <div className="mini-spacer"/>
             <h1>Account</h1>
             <br/>
-            <h5>Send me an email! I always want to hear what you love, hate, or just would love to see next.</h5>
-            <p>your email: <strong>{props.email}</strong></p>
-            <p>your name: <strong>{props.name}</strong></p>
-            <p>your account type: <strong>{props.planType}</strong></p>
-            { props.owner ? <a href="/owner">Go to owner page</a> : <div/> }
+            <div className="container">
+                <div className="row text-left">
+                    <div className="col-md" />
+                    <div className="col-md light-gray">
+                        <p>
+                            your email: 
+                            <br/> 
+                            <strong>{props.email}</strong>
+                        </p>
+                        <p>
+                            your name: 
+                            <br/> 
+                            <strong>{props.name}</strong>
+                        </p>
+                        <p>your account type: 
+                            <br/> 
+                            <strong>{props.planType}</strong>
+                        </p>
+                    </div>
+                    <div className="col-md" />
+                </div>
+                <br/>
+                <div className="row">
+                    { props.owner ? <a className="col" href="/owner">Go to owner page</a> : <div/> }
+                </div>
+            </div>
             <br/>
+            <footer>
+                Love Fetchspot? Hate it? <a href="mailto:deeter.cesler@gmail.com">Send me an email!</a> 
+                <br/>
+                I'm always looking to keep the good things and fix what's broken.
+            </footer>
+            <div className="mini-spacer" />
+            <div className="mini-spacer" />
         </div>
     )
 }
