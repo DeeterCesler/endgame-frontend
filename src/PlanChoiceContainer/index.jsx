@@ -22,7 +22,7 @@ const PlanChoiceContainer = (props) => {
                         <ul className="deets text-left">
                             <li>1,000 API calls per month</li>
                             <li>Create up to 50 endpoints</li>
-                            <li>$4.99/month</li>
+                            <li>$0.99/month</li>
                         </ul>
                     </div>
                 </div>
@@ -34,7 +34,7 @@ const PlanChoiceContainer = (props) => {
                             <ul className="deets text-left">
                                 <li>5,000 API calls per month</li>
                                 <li>Create up to 250 endpoints</li>
-                                <li>$64.99/month</li>
+                                <li>$4.99/month</li>
                             </ul>
                         </div>
                     </div>
