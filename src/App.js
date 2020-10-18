@@ -18,6 +18,9 @@ import NoMatchPage from './NoMatchPage';
 import { loadStripe } from '@stripe/stripe-js';
 import NewEndpointPage from './NewEndpointPage';
 import AllUserEndpoints from './AllUserEndpoints';
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-110417068-6');
+ReactGA.pageview(window.location.pathname + window.location.search);
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 const backendURL = process.env.REACT_APP_BACKEND_SERVER_ADDRESS
