@@ -436,7 +436,7 @@ class App extends Component {
             <Route exact path="/help" render={this.helpPage}/>
             <Route exact path="/account" render={this.accountPage}/>
             <Route exact path="/owner" render={this.ownerPage}/>
-            <Route render={this.NoMatch} />
+            <Route path="/*" render={this.NoMatch} />
           </Switch>
         </div>
     );
