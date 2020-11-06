@@ -282,3 +282,7 @@ body {
   border-radius: 15px;
   border: #f75394 solid 2px;
 }
+
+.link {
+  text-decoration: underline;
+}

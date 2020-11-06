@@ -78,7 +78,7 @@ class AllUserEndpoints extends Component {
                                 <div>
                                     <div className="mini-spacer" />
                                     <div className="light-gray container">
-                                        <h2><a href="/routes/new">Create an endpoint</a></h2>
+                                        <h2 className="link"><a href="/routes/new">Create an endpoint</a></h2>
                                     </div>
                                     <br/>
                                     <div className="light-gray container">
