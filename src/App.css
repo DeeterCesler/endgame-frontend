@@ -244,6 +244,7 @@ body {
   background-color: #cecece;
   border-radius: 15px;
   padding: 2em;
+  border: #f75394 solid 2px;
 }
 
 .light-gray {
@@ -251,6 +252,7 @@ body {
   border-radius: 15px;
   padding: 2em;
   min-width: 50%;
+  border: #f75394 solid 2px;
 }
 
 .step {
@@ -268,4 +270,15 @@ body {
 
 .found-endpoint p {
   margin-bottom: 0.5em;
+}
+
+.separator {
+  height: 3px;
+  background-color: #f75394;
+}
+
+.red-outline {
+  padding: 2em;
+  border-radius: 15px;
+  border: #f75394 solid 2px;
 }

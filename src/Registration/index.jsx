@@ -3,7 +3,7 @@ import { Form, Input, Button, Alert } from "reactstrap";
 
 const Registration = (props) => {
     return(
-        <div>
+        <div className="red-outline">
             <h3>Register</h3>
             { props.message && (props.message[0] === "E" || props.message[0] === "J") ? <Alert className="incorrect" color="danger">{props.message}</Alert> : <div/> }
             <Form className="register" onSubmit={props.submitRegistration}>

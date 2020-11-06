@@ -420,6 +420,7 @@ class App extends Component {
     return (
         <div className="App">
           <NavBar isRegistered={this.state.isRegistered} loggedIn={this.state.loggedIn} owner={this.state.owner} />
+          <div className="separator" />
           <Switch>
             <Route exact path="/" render={this.homepage}/>
             <Route exact path="/about" render={this.aboutPage}/>
